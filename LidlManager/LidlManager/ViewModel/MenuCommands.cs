@@ -47,7 +47,8 @@ namespace LidlManager.ViewModel
             var usersFromDb = lidlManager.Users.ToList();
             foreach (var user in usersFromDb)
             {
-                users.Add(user);
+                if((bool)user.IsActive)
+                  users.Add(user);
             }
         }
 

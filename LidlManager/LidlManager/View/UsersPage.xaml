@@ -46,10 +46,16 @@
                     <ComboBoxItem Content="Cashier"/>
                 </ComboBox>
             </StackPanel>
-            <DockPanel Width="374" Height="77">
-                <Button Content="Delete" Width="182" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 20 10 0"/>
-                <Button Content="Save" Width="172" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="10 20 0 0"/>
-            </DockPanel>
+            <Grid Width="382" Height="77">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="1" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="2" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
+            </Grid>
         </StackPanel>
     </Grid>
 </Page>
