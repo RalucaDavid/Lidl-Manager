@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace LidlManager.View
 {
     /// <summary>
-    /// Interaction logic for AdminMenu.xaml
+    /// Interaction logic for UsersPage.xaml
     /// </summary>
-    public partial class AdminMenu : Page
+    public partial class UsersPage : Page
     {
-        public AdminMenu(object dContext)
+        public UsersPage()
         {
             InitializeComponent();
-            DataContext = dContext;
         }
     }
 }

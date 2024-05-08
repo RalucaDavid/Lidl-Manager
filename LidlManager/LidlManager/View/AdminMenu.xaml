@@ -15,8 +15,8 @@
         <Image Source="../Resources/logo.png" Margin="290,50,290,450" HorizontalAlignment="Center"/>
         <Button Content="Users" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="280,375,0,308"/>
         <Button Content="Products" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="280,593,0,90"/>
-        <Button Content="Producers" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="860,593,0,90"/>
-        <Button Content="Stocks" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="860,375,0,308"/>
-        <Button Content="Receipts" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,488,0,195"/>
+        <Button Content="Producers" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,593,0,90"/>
+        <Button Content="Stocks" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,375,0,308"/>
+        <Button Content="Receipts" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,485,0,198"/>
     </Grid>
 </Page>

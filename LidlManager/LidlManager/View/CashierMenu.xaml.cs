@@ -20,9 +20,10 @@ namespace LidlManager.View
     /// </summary>
     public partial class CashierMenu : Page
     {
-        public CashierMenu()
+        public CashierMenu(object dContext)
         {
             InitializeComponent();
+            DataContext = dContext;
         }
     }
 }

@@ -8,6 +8,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Checkers.ViewModel;
+using LidlManager.View;
+using LidlManager.ViewModel;
 
 namespace LidlManager
 {
@@ -19,6 +22,7 @@ namespace LidlManager
         public MainWindow()
         {
             InitializeComponent();
+            MainFrame.Navigate(new LoginPage(DataContext));
         }
     }
 }
