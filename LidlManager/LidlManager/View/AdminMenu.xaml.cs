@@ -25,5 +25,55 @@ namespace LidlManager.View
             InitializeComponent();
             DataContext = dContext;
         }
+
+        private void GoToUsersPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                 navigationService.RemoveBackEntry();
+                 navigationService.Navigate(new UsersPage(DataContext));
+            }
+        }
+
+        private void GoToProducersPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new ProducersPage(DataContext));
+            }
+        }
+
+        private void GoToProductsPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new ProductsPage(DataContext));
+            }
+        }
+
+        private void GoToStocksPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new StocksPage(DataContext));
+            }
+        }
+
+        private void GoToReceiptsPage(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new ReceiptsPage(DataContext));
+            }
+        }
     }
 }

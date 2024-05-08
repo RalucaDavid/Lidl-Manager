@@ -16,7 +16,7 @@
         <ListBox Name="usersList" Margin="90,130,655,70">
 
         </ListBox>
-        <Button x:Name="back" Content="Back"  Margin="33,22,1232,728" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
+        <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="415" Width="430" Margin="850,315,0,0">
             <StackPanel.Background>
                 <SolidColorBrush Color="#FF1C2C93" Opacity="1"/>
@@ -37,7 +37,10 @@
                     <ComboBoxItem Content="Cashier"/>
                 </ComboBox>
             </StackPanel>
-            <Button Content="Save" Width="240" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 20 0 0"/>
+            <DockPanel Width="374" Height="77">
+                <Button Content="Delete" Width="182" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 20 10 0"/>
+                <Button Content="Save" Width="172" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="10 20 0 0"/>
+            </DockPanel>
         </StackPanel>
     </Grid>
 </Page>

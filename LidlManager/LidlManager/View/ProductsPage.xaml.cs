@@ -18,11 +18,12 @@ namespace LidlManager.View
     /// <summary>
     /// Interaction logic for Products.xaml
     /// </summary>
-    public partial class Products : Page
+    public partial class ProductsPage : Page
     {
-        public Products()
+        public ProductsPage(object dContext)
         {
             InitializeComponent();
+            DataContext = dContext;
         }
     }
 }

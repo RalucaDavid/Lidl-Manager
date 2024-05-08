@@ -20,9 +20,10 @@ namespace LidlManager.View
     /// </summary>
     public partial class StocksPage : Page
     {
-        public StocksPage()
+        public StocksPage(object dContext)
         {
             InitializeComponent();
+            DataContext = dContext;
         }
     }
 }

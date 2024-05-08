@@ -16,24 +16,14 @@ using System.Windows.Shapes;
 namespace LidlManager.View
 {
     /// <summary>
-    /// Interaction logic for UsersPage.xaml
+    /// Interaction logic for ReceiptsPage.xaml
     /// </summary>
-    public partial class UsersPage : Page
+    public partial class ReceiptsPage : Page
     {
-        public UsersPage(object dContext)
+        public ReceiptsPage(object dContext)
         {
             InitializeComponent();
             DataContext = dContext;
-        }
-
-        private void GoToAdminMenu(object sender, RoutedEventArgs e)
-        {
-            NavigationService navigationService = NavigationService.GetNavigationService(this);
-            if (navigationService != null)
-            {
-                navigationService.RemoveBackEntry();
-                navigationService.Navigate(new AdminMenu(DataContext));
-            }
         }
     }
 }

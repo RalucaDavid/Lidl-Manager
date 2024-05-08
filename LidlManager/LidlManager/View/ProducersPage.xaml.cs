@@ -20,9 +20,10 @@ namespace LidlManager.View
     /// </summary>
     public partial class ProducersPage : Page
     {
-        public ProducersPage()
+        public ProducersPage(object dContext)
         {
             InitializeComponent();
+            DataContext = dContext;
         }
     }
 }
