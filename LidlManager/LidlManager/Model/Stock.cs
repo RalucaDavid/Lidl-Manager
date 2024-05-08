@@ -19,5 +19,7 @@ public partial class Stock
 
     public int IdProduct { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual Product IdProductNavigation { get; set; } = null!;
 }

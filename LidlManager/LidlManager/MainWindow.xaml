@@ -25,7 +25,7 @@
                 <TextBlock Text="Password:" Height="31" Width="86" FontSize="20" Foreground="White"/>
                 <PasswordBox x:Name="passwordBox" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
-            <Button Content="Login" Width="240" Background="#FFF70E06" HorizontalAlignment="Center" Height="53" FontSize="15" Foreground="White"/>
+            <Button Content="Login" Width="240" Background="#FFF70E06" HorizontalAlignment="Center" Height="53" FontSize="20" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

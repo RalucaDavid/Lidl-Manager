@@ -13,6 +13,8 @@ public partial class Receipt
 
     public int IdUser { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual User IdUserNavigation { get; set; } = null!;
 
     public virtual ICollection<ProductReceipt> ProductReceipts { get; set; } = new List<ProductReceipt>();

@@ -17,6 +17,8 @@ public partial class Product
 
     public int IdProducer { get; set; }
 
+    public bool? IsActive { get; set; }
+
     public virtual Producer IdProducerNavigation { get; set; } = null!;
 
     public virtual ICollection<ProductReceipt> ProductReceipts { get; set; } = new List<ProductReceipt>();

@@ -8,6 +8,6 @@ namespace LidlManager.ViewModel
 {
     class MenuCommands
     {
-
+        // LidlManagerContext lidlManager;
     }
 }
