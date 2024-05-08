@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using LidlManager.View;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace LidlManager.ViewModel
 {
@@ -15,7 +16,40 @@ namespace LidlManager.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        LidlManagerContext lidlManager =  new LidlManagerContext();
+        private LidlManagerContext lidlManager =  new LidlManagerContext();
+        private ObservableCollection<User> users = new ObservableCollection<User>();
+
+        public LidlManagerContext LidlManager
+        {
+            get { return lidlManager; }
+            set
+            {
+                lidlManager = value;
+                OnPropertyChanged(nameof(LidlManager));
+            }
+        }
+        public ObservableCollection<User> Users
+        {
+            get { return users; }
+            set
+            {
+                users = value;
+                OnPropertyChanged(nameof(LidlManager));
+            }
+        }
+
+        public MenuCommands()
+        {
+            InitializeUsers();
+        }
+        private void InitializeUsers()
+        {
+            var usersFromDb = lidlManager.Users.ToList();
+            foreach (var user in usersFromDb)
+            {
+                users.Add(user);
+            }
+        }
 
         public string Login(object sender, RoutedEventArgs e, string username, string password)
         {

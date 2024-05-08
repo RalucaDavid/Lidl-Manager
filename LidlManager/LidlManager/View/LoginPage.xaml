@@ -19,11 +19,11 @@
             <TextBlock Text="Login" FontSize="30" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="White"/>
             <StackPanel Margin="0 0 0 20">
                 <TextBlock Text="Username:" HorizontalAlignment="Center" Height="33" Width="94" FontSize="20" Foreground="White"/>
-                <TextBox x:Name="usernameTextBox" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <TextBox x:Name="usernameTextBox" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
             <StackPanel Margin="0 0 0 20">
                 <TextBlock Text="Password:" Height="31" Width="86" FontSize="20" Foreground="White"/>
-                <PasswordBox x:Name="passwordBox" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <PasswordBox x:Name="passwordBox" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
             <Button Click="Login" Content="Login" Width="240" Background="#FFF70E06" HorizontalAlignment="Center" Height="53" FontSize="20" Foreground="White"/>
         </StackPanel>

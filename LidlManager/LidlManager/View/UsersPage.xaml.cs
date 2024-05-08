@@ -35,5 +35,12 @@ namespace LidlManager.View
                 navigationService.Navigate(new AdminMenu(DataContext));
             }
         }
+
+        private void UserSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string username = usernameTextBox.Text;
+            string password = passwordTextBox.Text;
+            
+        }
     }
 }
