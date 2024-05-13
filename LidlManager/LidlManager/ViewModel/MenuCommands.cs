@@ -9,6 +9,7 @@ using System.Windows;
 using LidlManager.View;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
+using LidlManager.Model.BussinessLogicLayer;
 
 namespace LidlManager.ViewModel
 {
@@ -16,45 +17,42 @@ namespace LidlManager.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private LidlManagerContext lidlManager =  new LidlManagerContext();
         private ObservableCollection<User> users = new ObservableCollection<User>();
-
-        public LidlManagerContext LidlManager
-        {
-            get { return lidlManager; }
-            set
-            {
-                lidlManager = value;
-                OnPropertyChanged(nameof(LidlManager));
-            }
-        }
         public ObservableCollection<User> Users
         {
             get { return users; }
             set
             {
-                users = value;
-                OnPropertyChanged(nameof(LidlManager));
+                if (users != value)
+                {
+                    users = value;
+                    OnPropertyChanged(nameof(Users));
+                }
+            }
+        }
+        private UserBLL userBLL;
+        public UserBLL UserBLL
+        {
+            get { return userBLL; }
+            set
+            {
+                if (userBLL != value)
+                {
+                    userBLL = value;
+                    OnPropertyChanged(nameof(UserBLL));
+                }
             }
         }
 
         public MenuCommands()
         {
-            InitializeUsers();
-        }
-        private void InitializeUsers()
-        {
-            var usersFromDb = lidlManager.Users.ToList();
-            foreach (var user in usersFromDb)
-            {
-                if((bool)user.IsActive)
-                  users.Add(user);
-            }
+            userBLL = new UserBLL();
+            Users = userBLL.GetAllUsers();
         }
 
         public string Login(object sender, RoutedEventArgs e, string username, string password)
         {
-            User user = lidlManager.Users.FirstOrDefault(u => u.Name == username && u.Password == password);
+            User user = userBLL.Login(username, password);
             if (user != null)
             {
                 if (user.Type == "Admin")
