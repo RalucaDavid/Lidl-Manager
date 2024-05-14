@@ -37,9 +37,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("Producer");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.CountryOfOrigin)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -52,9 +50,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("Product");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -73,9 +69,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("ProductReceipt");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdProduct).HasColumnName("Id_product");
             entity.Property(e => e.IdReceipt).HasColumnName("Id_receipt");
 
@@ -94,9 +88,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("Receipt");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.FloatTotalSum).HasColumnName("floatTotalSum");
             entity.Property(e => e.IdUser).HasColumnName("Id_user");
 
@@ -110,9 +102,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("Stock");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdProduct).HasColumnName("Id_product");
 
             entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.Stocks)
@@ -125,9 +115,7 @@ public partial class LidlManagerContext : DbContext
         {
             entity.ToTable("User");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LidlManager.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -41,6 +42,17 @@ namespace LidlManager.View
             string username = usernameTextBox.Text;
             string password = passwordTextBox.Text;
             
+        }
+
+        private void AddUser(object sender, RoutedEventArgs e)
+        {
+            string username = usernameTextBox.Text;
+            string password = passwordTextBox.Text;
+            string role = cmbRole.Text;
+            if (DataContext is MenuCommands menuCommands)
+            {
+                menuCommands.AddUser(sender, e, username, password, role);
+            }
         }
     }
 }

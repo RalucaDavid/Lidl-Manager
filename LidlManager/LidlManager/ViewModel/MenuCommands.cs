@@ -10,6 +10,7 @@ using LidlManager.View;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using LidlManager.Model.BussinessLogicLayer;
+using Azure.Identity;
 
 namespace LidlManager.ViewModel
 {
@@ -66,6 +67,28 @@ namespace LidlManager.ViewModel
             }
             MessageBox.Show("Incorrect username or password!");
             return "None";
+        }
+
+        public void AddUser(object sender, RoutedEventArgs e, string username, string password, string role)
+        {
+            try
+            {
+                if ((userBLL != null) && (!string.IsNullOrEmpty(username)) && (!string.IsNullOrEmpty(password)) && (!string.IsNullOrEmpty(role)))
+                {
+                    User user = new User();
+                    user.Name = username;
+                    user.Password = password;
+                    user.Type = role;
+                    userBLL.AddMethod(user);
+                    Users = userBLL.GetAllUsers();
+                }
+                else
+                    MessageBox.Show("Incorrect username or password!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
         }
         private void OnPropertyChanged(string propertyName)
         {

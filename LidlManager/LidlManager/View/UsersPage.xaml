@@ -32,8 +32,8 @@
             </StackPanel.Background>
             <TextBlock Text="User" FontSize="30" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="White"/>
             <StackPanel Margin="0 0 0 20">
-                <TextBlock x:Name="usernameTextBox" Text="Username:" HorizontalAlignment="Center" Height="33" Width="94" FontSize="20" Foreground="White"/>
-                <TextBox Text="{Binding SelectedUser.Name}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <TextBlock Text="Username:" HorizontalAlignment="Center" Height="33" Width="94" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="usernameTextBox" Text="{Binding SelectedUser.Name}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
             <StackPanel Margin="0 0 0 20">
                 <TextBlock Text="Password:" Height="31" Width="86" FontSize="20" Foreground="White"/>
@@ -41,7 +41,7 @@
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Role:" Height="31" Width="86" FontSize="20" Foreground="White"/>
-                <ComboBox x:Name="cmbRole" Width="380" FontSize="25" Height="41" SelectedItem="{Binding Type}">
+                <ComboBox x:Name="cmbRole" Width="380" FontSize="25" Height="41" SelectedItem="{Binding SelectedUser.Type}">
                     <ComboBoxItem Content="Admin"/>
                     <ComboBoxItem Content="Cashier"/>
                 </ComboBox>
@@ -54,7 +54,7 @@
                 </Grid.ColumnDefinitions>
                 <Button Grid.Column="0" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
                 <Button Grid.Column="1" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
-                <Button Grid.Column="2" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
+                <Button Grid.Column="2" Click="AddUser" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
             </Grid>
         </StackPanel>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.ApplicationServices;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,10 +13,24 @@ namespace LidlManager.Model.BussinessLogicLayer
     {
         private LidlManagerContext lidlManager = new LidlManagerContext();
 
-        //public void AddMethod(object obj)
-        //{
-
-        //}
+        public void AddMethod(object obj)
+        {
+            if (obj is User newUser)
+            {
+                var existingUser = lidlManager.Users.FirstOrDefault(u => u.Name == newUser.Name);
+                if (existingUser != null)
+                {
+                    throw new InvalidOperationException("A user with the same username already exists.");
+                }
+                newUser.IsActive = true;
+                lidlManager.Users.Add(newUser);
+                lidlManager.SaveChanges();
+            }
+            else
+            {
+                throw new ArgumentException("Object is not a User");
+            }
+        }
 
         //public void UpdateMethod(object obj)
         //{
