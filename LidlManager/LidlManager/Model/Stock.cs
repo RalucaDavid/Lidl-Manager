@@ -11,6 +11,8 @@ public partial class Stock
 
     public double Unit { get; set; }
 
+    public double? ExpirationDate { get; set; }
+
     public DateOnly SupplyDate { get; set; }
 
     public double PuchasePrice { get; set; }
@@ -19,7 +21,7 @@ public partial class Stock
 
     public int IdProduct { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public virtual Product IdProductNavigation { get; set; } = null!;
 }

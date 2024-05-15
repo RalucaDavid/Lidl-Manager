@@ -51,6 +51,9 @@ public partial class LidlManagerContext : DbContext
             entity.ToTable("Product");
 
             entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Barcode)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.Category)
                 .HasMaxLength(50)
                 .IsUnicode(false);

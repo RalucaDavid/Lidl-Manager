@@ -6,12 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Text.RegularExpressions;
 using LidlManager.View;
 using System.Windows.Input;
 using System.Collections.ObjectModel;
 using LidlManager.Model.BussinessLogicLayer;
 using Azure.Identity;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 
 namespace LidlManager.ViewModel
 {
@@ -26,6 +28,9 @@ namespace LidlManager.ViewModel
 
             producerBLL = new ProducerBLL();
             Producers = producerBLL.GetAllProducers();
+
+            productBLL = new ProductBLL();
+            Products = productBLL.GetAllProducts();
         }
 
         #region Users
@@ -214,6 +219,63 @@ namespace LidlManager.ViewModel
                 }
                 else
                     MessageBox.Show("Incorrect name or country!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        #endregion
+
+        #region Products
+
+        private ObservableCollection<Product> products = new ObservableCollection<Product>();
+        public ObservableCollection<Product> Products
+        {
+            get { return products; }
+            set
+            {
+                if (products != value)
+                {
+                    products = value;
+                    OnPropertyChanged(nameof(Products));
+                }
+            }
+        }
+        private ProductBLL productBLL;
+        public ProductBLL ProductBLL
+        {
+            get { return productBLL; }
+            set
+            {
+                if (productBLL != value)
+                {
+                    productBLL = value;
+                    OnPropertyChanged(nameof(ProductBLL));
+                }
+            }
+        }
+
+        public void AddProduct(string name, string barcode, string category, Producer selectedProducer)
+        {
+            try
+            {
+                string pattern = @"^\d{1,10}$";
+                Regex regex = new Regex(pattern);
+                if ((productBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(barcode)) && (!string.IsNullOrEmpty(category)) && (selectedProducer!=null) && (regex.IsMatch(barcode)))
+                {
+                    Product product = new Product();
+                    product.Name = name;
+                    product.Barcode = barcode;
+                    product.Category = category;
+                    product.IdProducer = selectedProducer.Id; 
+                    product.IdProducerNavigation = selectedProducer;
+                    productBLL.AddMethod(product);
+                    Products = productBLL.GetAllProducts();
+                }
+                else
+                    MessageBox.Show("Incorrect information!");
             }
             catch (Exception ex)
             {

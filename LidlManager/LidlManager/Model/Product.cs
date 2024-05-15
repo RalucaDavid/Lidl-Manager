@@ -9,15 +9,13 @@ public partial class Product
 
     public string Name { get; set; } = null!;
 
-    public int Barcode { get; set; }
-
-    public DateOnly? ExpirationDate { get; set; }
+    public string Barcode { get; set; } = null!;
 
     public string Category { get; set; } = null!;
 
     public int IdProducer { get; set; }
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public virtual Producer IdProducerNavigation { get; set; } = null!;
 

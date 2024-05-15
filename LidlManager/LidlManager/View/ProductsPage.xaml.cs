@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LidlManager.Model;
+using LidlManager.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +28,36 @@ namespace LidlManager.View
             DataContext = dContext;
         }
 
-        
+        private void GoToAdminMenu(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new AdminMenu(DataContext));
+            }
+        }
+
+        private void AddProduct(object sender, RoutedEventArgs e)
+        {
+            string name = nameTextBox.Text;
+            string barcode = barcodeTextBox.Text;
+            string category = categoryTextBox.Text;
+            Producer selectedProducer = cmbProducer.SelectedItem as Producer;
+            if (DataContext is MenuCommands menuCommands)
+            {
+                menuCommands.AddProduct(name, barcode, category, selectedProducer);
+            }
+        }
+
+        private void UpdateProduct(object sender, RoutedEventArgs e)
+        {
+          
+        }
+
+        private void DeleteProduct(object sender, RoutedEventArgs e)
+        {
+           
+        }
     }
 }

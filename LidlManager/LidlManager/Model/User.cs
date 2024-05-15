@@ -13,7 +13,7 @@ public partial class User
 
     public string Type { get; set; } = null!;
 
-    public bool? IsActive { get; set; }
+    public bool IsActive { get; set; }
 
     public virtual ICollection<Receipt> Receipts { get; set; } = new List<Receipt>();
 }
