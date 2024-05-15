@@ -5,10 +5,50 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LidlManager.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1400"
       Title="ProducersPage">
 
     <Grid>
-        
+        <Grid.Background>
+            <SolidColorBrush Color="#FFFBF904" Opacity="0.6"/>
+        </Grid.Background>
+        <Image Source="../Resources/logo.png" Margin="1090,0,0,500" HorizontalAlignment="Left"/>
+        <TextBlock FontSize="15" Margin="185,134,-165,-134"><Run Text="Format: Name + Country Of Origin"/></TextBlock>
+        <ListBox Name="producersList" Margin="90,160,805,35" ItemsSource="{Binding Producers}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="15" Text="{Binding Name}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding CountryOfOrigin}" Margin="10,0,10,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="335" Width="430" Margin="645,320,0,0"
+DataContext="{Binding Path=DataContext, ElementName=producersList}">
+            <StackPanel.Background>
+                <SolidColorBrush Color="#FF1C2C93" Opacity="1"/>
+            </StackPanel.Background>
+            <TextBlock Text="Producer" FontSize="30" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="White"/>
+            <StackPanel Margin="0 0 0 20">
+                <TextBlock Text="Name:" HorizontalAlignment="Center" Height="33" Width="94" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="nameTextBox" Text="{Binding SelectedItem.Name, ElementName=producersList, Mode=OneWay}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <StackPanel Margin="0 0 0 20">
+                <TextBlock Text="Country Of Origin:" Height="31" Width="162" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="countryTextBox" FontSize="25" Text="{Binding SelectedItem.CountryOfOrigin, ElementName=producersList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <Grid Width="382" Height="77">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Click="DeleteProducer" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="1" Click="UpdateProducer" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="2" Click="AddProducer" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>

@@ -25,5 +25,7 @@ namespace LidlManager.View
             InitializeComponent();
             DataContext = dContext;
         }
+
+        
     }
 }

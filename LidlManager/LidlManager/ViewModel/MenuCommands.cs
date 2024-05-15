@@ -23,6 +23,9 @@ namespace LidlManager.ViewModel
         {
             userBLL = new UserBLL();
             Users = userBLL.GetAllUsers();
+
+            producerBLL = new ProducerBLL();
+            Producers = producerBLL.GetAllProducers();
         }
 
         #region Users
@@ -123,6 +126,94 @@ namespace LidlManager.ViewModel
                 }
                 else
                     MessageBox.Show("Incorrect username or password!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        #endregion
+
+        #region Producers
+
+        private ObservableCollection<Producer> producers = new ObservableCollection<Producer>();
+        public ObservableCollection<Producer> Producers
+        {
+            get { return producers; }
+            set
+            {
+                if (producers != value)
+                {
+                    producers = value;
+                    OnPropertyChanged(nameof(Producers));
+                }
+            }
+        }
+        private ProducerBLL producerBLL;
+        public ProducerBLL ProducerBLL
+        {
+            get { return producerBLL; }
+            set
+            {
+                if (producerBLL != value)
+                {
+                    producerBLL = value;
+                    OnPropertyChanged(nameof(ProducerBLL));
+                }
+            }
+        }
+
+        public void AddProducer(object sender, RoutedEventArgs e, string name, string country)
+        {
+            try
+            {
+                if ((producerBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(country)))
+                {
+                    Producer producer = new Producer();
+                    producer.Name = name;
+                    producer.CountryOfOrigin = country;
+                    producerBLL.AddMethod(producer);
+                    Producers = producerBLL.GetAllProducers();
+                }
+                else
+                    MessageBox.Show("Incorrect name or country!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void UpdateProducer(object sender, RoutedEventArgs e, int id, string name, string country)
+        {
+            try
+            {
+                if ((producerBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(country)))
+                {
+                    producerBLL.UpdateMethod(id, name, country);
+                    Producers = producerBLL.GetAllProducers();
+                }
+                else
+                    MessageBox.Show("Incorrect name or country!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void DeleteProducer(object sender, RoutedEventArgs e, string name, string country)
+        {
+            try
+            {
+                if ((producerBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(country)))
+                {
+                    producerBLL.DeleteMethod(name, country);
+                    Producers = producerBLL.GetAllProducers();
+                }
+                else
+                    MessageBox.Show("Incorrect name or country!");
             }
             catch (Exception ex)
             {
