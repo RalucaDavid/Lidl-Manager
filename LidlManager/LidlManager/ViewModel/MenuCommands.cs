@@ -11,12 +11,21 @@ using System.Windows.Input;
 using System.Collections.ObjectModel;
 using LidlManager.Model.BussinessLogicLayer;
 using Azure.Identity;
+using System.Diagnostics;
 
 namespace LidlManager.ViewModel
 {
     class MenuCommands : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public MenuCommands()
+        {
+            userBLL = new UserBLL();
+            Users = userBLL.GetAllUsers();
+        }
+
+        #region Users
 
         private ObservableCollection<User> users = new ObservableCollection<User>();
         public ObservableCollection<User> Users
@@ -43,12 +52,6 @@ namespace LidlManager.ViewModel
                     OnPropertyChanged(nameof(UserBLL));
                 }
             }
-        }
-
-        public MenuCommands()
-        {
-            userBLL = new UserBLL();
-            Users = userBLL.GetAllUsers();
         }
 
         public string Login(object sender, RoutedEventArgs e, string username, string password)
@@ -90,6 +93,45 @@ namespace LidlManager.ViewModel
                 MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
         }
+
+        public void UpdateUser(object sender, RoutedEventArgs e,int id, string username, string password, string role)
+        {
+            try
+            {
+                if ((userBLL != null) && (!string.IsNullOrEmpty(username)) && (!string.IsNullOrEmpty(password)) && (!string.IsNullOrEmpty(role)))
+                {
+                    userBLL.UpdateMethod(id,username, password, role);
+                    Users = userBLL.GetAllUsers();
+                }
+                else
+                    MessageBox.Show("Incorrect username or password!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void DeleteUser(object sender, RoutedEventArgs e, string username, string password, string role)
+        {
+            try
+            {
+                if ((userBLL != null) && (!string.IsNullOrEmpty(username)) && (!string.IsNullOrEmpty(password)) && (!string.IsNullOrEmpty(role)))
+                {
+                    userBLL.DeleteMethod(username, password, role);
+                    Users = userBLL.GetAllUsers();
+                }
+                else
+                    MessageBox.Show("Incorrect username or password!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        #endregion
+
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

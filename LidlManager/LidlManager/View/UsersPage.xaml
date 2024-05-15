@@ -14,7 +14,7 @@
         </Grid.Background>
         <Image Source="../Resources/logo.png" Margin="1090,0,0,500" HorizontalAlignment="Left"/>
         <TextBlock FontSize="15" Text="Format: Username + Password + Role" Margin="185,134,-165,-134"/>
-        <ListBox Name="usersList" Margin="90,160,805,35" ItemsSource="{Binding Users}" SelectionChanged="UserSelectionChanged">
+        <ListBox Name="usersList" Margin="90,160,805,35" ItemsSource="{Binding Users}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -26,22 +26,24 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="415" Width="430" Margin="635,285,0,0">
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Height="415" Width="430" Margin="635,285,0,0"
+            DataContext="{Binding Path=DataContext, ElementName=usersList}">
             <StackPanel.Background>
                 <SolidColorBrush Color="#FF1C2C93" Opacity="1"/>
             </StackPanel.Background>
             <TextBlock Text="User" FontSize="30" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="White"/>
             <StackPanel Margin="0 0 0 20">
                 <TextBlock Text="Username:" HorizontalAlignment="Center" Height="33" Width="94" FontSize="20" Foreground="White"/>
-                <TextBox x:Name="usernameTextBox" Text="{Binding SelectedUser.Name}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <TextBox x:Name="usernameTextBox" Text="{Binding SelectedItem.Name, ElementName=usersList, Mode=OneWay}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
             <StackPanel Margin="0 0 0 20">
                 <TextBlock Text="Password:" Height="31" Width="86" FontSize="20" Foreground="White"/>
-                <TextBox x:Name="passwordTextBox" FontSize="25" Text="{Binding SelectedUser.Password}" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <TextBox x:Name="passwordTextBox" FontSize="25" Text="{Binding SelectedItem.Password, ElementName=usersList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Role:" Height="31" Width="86" FontSize="20" Foreground="White"/>
-                <ComboBox x:Name="cmbRole" Width="380" FontSize="25" Height="41" SelectedItem="{Binding SelectedUser.Type}">
+                <ComboBox x:Name="cmbRole" Width="380" FontSize="25" Height="41" SelectedValue="{Binding SelectedItem.Type, ElementName=usersList, Mode=OneWay}" 
+          SelectedValuePath="Content">
                     <ComboBoxItem Content="Admin"/>
                     <ComboBoxItem Content="Cashier"/>
                 </ComboBox>
@@ -52,8 +54,8 @@
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
-                <Button Grid.Column="1" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="0" Click="DeleteUser" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="1" Click="UpdateUser" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
                 <Button Grid.Column="2" Click="AddUser" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
             </Grid>
         </StackPanel>
