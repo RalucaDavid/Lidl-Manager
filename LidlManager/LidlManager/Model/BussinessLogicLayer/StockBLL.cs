@@ -28,18 +28,37 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
             else
             {
-                throw new ArgumentException("Object is not a Product");
+                throw new ArgumentException("Object is not a Stock");
             }
         }
 
-        public void UpdateMethod(int id, string name, string barcode, Category category, Producer producer)
+        public void UpdateMethod(int id, double sellingPrice)
         {
-           
+            var existingStock = lidlManager.Stocks.FirstOrDefault(s => s.Id == id);
+            if (existingStock == null)
+            {
+                throw new InvalidOperationException("The stock doesn't exist.");
+            }
+            else
+            {
+                if (existingStock.PuchasePrice > sellingPrice)
+                {
+                    throw new InvalidOperationException("The sale price is lower than the purchase price.");
+                }
+                existingStock.SellingPrice = sellingPrice;
+                lidlManager.SaveChanges();
+            }
         }
 
-        public void DeleteMethod(string name, string barcode, Category category, Producer producer)
+        public void DeleteMethod(int id)
         {
-           
+            var existingStock = lidlManager.Stocks.FirstOrDefault(s => s.Id == id);
+            if (existingStock == null)
+            {
+                throw new InvalidOperationException("The stock doesn't exist.");
+            }
+            existingStock.IsActive = false;
+            lidlManager.SaveChanges();
         }
 
         public ObservableCollection<Stock> GetAllStocks()
@@ -48,6 +67,8 @@ namespace LidlManager.Model.BussinessLogicLayer
             var stocksFromDb = lidlManager.Stocks.Include(s => s.IdProductNavigation);
             foreach (var stock in stocksFromDb)
             {
+                if (stock.ExpirationDate.HasValue && stock.ExpirationDate.Value.ToDateTime(TimeOnly.MinValue) < DateTime.Now)
+                    stock.IsActive = false;
                 if ((bool)stock.IsActive)
                     result.Add(stock);
             }

@@ -54,12 +54,25 @@ namespace LidlManager.View
 
         private void UpdateStock(object sender, RoutedEventArgs e)
         {
-           
+            if (stocksList.SelectedItem is Stock selectedStock)
+            {
+                string selling = sellingTextBox.Text;
+                if (DataContext is MenuCommands menuCommands)
+                {
+                    menuCommands.UpdateStock(sender, e, selectedStock.Id, selling);
+                }
+            }
         }
 
         private void DeleteStock(object sender, RoutedEventArgs e)
         {
-           
+            if (stocksList.SelectedItem is Stock selectedStock)
+            {
+                if (DataContext is MenuCommands menuCommands)
+                {
+                    menuCommands.DeleteStock(sender, e, selectedStock.Id);
+                }
+            }
         }
     }
 }

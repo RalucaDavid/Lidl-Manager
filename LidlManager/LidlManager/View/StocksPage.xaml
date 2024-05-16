@@ -48,6 +48,8 @@ SelectedItem="{Binding SelectedItem.IdProductNavigation, ElementName=productsLis
                         <DataTemplate>
                             <StackPanel>
                                 <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding IdProducerNavigation.Name}" FontSize="16" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding IdProducerNavigation.CountryOfOrigin}" FontSize="16" FontWeight="Bold"/>
                             </StackPanel>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>

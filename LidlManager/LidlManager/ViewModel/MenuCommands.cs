@@ -456,7 +456,7 @@ namespace LidlManager.ViewModel
                 const double profitMarginPercentage = 20.0; 
                 const double taxesAndExpenses = 15.0; 
                 double amountDouble, purchaseDouble;
-                if ((stockBLL != null) && (!string.IsNullOrEmpty(unit)) && (!string.IsNullOrEmpty(amount)) && ( product!= null) 
+                if ((stockBLL != null) && (!string.IsNullOrEmpty(unit)) && (!string.IsNullOrEmpty(amount)) && (!string.IsNullOrEmpty(purchase)) && ( product!= null) 
                           && (double.TryParse(amount, out amountDouble))&&(double.TryParse(purchase, out purchaseDouble))
                           && (supplyDate != null) && ((expirationDate == null)||(expirationDate.Value > supplyDate.Value)))
                 {
@@ -477,6 +477,38 @@ namespace LidlManager.ViewModel
                 }
                 else
                     MessageBox.Show("Incorrect information!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void UpdateStock(object sender, RoutedEventArgs e, int id, string selling)
+        {
+            try
+            {
+                double sellingDouble;
+                if ((producerBLL != null) && (!string.IsNullOrEmpty(selling)) && (double.TryParse(selling, out sellingDouble)))
+                {
+                    stockBLL.UpdateMethod(id, sellingDouble);
+                    Stocks = stockBLL.GetAllStocks();
+                }
+                else
+                    MessageBox.Show("Incorrect information!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void DeleteStock(object sender, RoutedEventArgs e, int id)
+        {
+            try
+            {
+                stockBLL.DeleteMethod(id);
+                Stocks = stockBLL.GetAllStocks();
             }
             catch (Exception ex)
             {
