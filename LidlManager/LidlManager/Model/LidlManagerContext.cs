@@ -21,11 +21,11 @@ public partial class LidlManagerContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
-    public virtual DbSet<ProductReceipt> ProductReceipts { get; set; }
-
     public virtual DbSet<Receipt> Receipts { get; set; }
 
     public virtual DbSet<Stock> Stocks { get; set; }
+
+    public virtual DbSet<StockReceipt> StockReceipts { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
 
@@ -83,25 +83,6 @@ public partial class LidlManagerContext : DbContext
                 .HasConstraintName("FK_Product_Producer");
         });
 
-        modelBuilder.Entity<ProductReceipt>(entity =>
-        {
-            entity.ToTable("ProductReceipt");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.IdProduct).HasColumnName("Id_product");
-            entity.Property(e => e.IdReceipt).HasColumnName("Id_receipt");
-
-            entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.ProductReceipts)
-                .HasForeignKey(d => d.IdProduct)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Product_Receipt");
-
-            entity.HasOne(d => d.IdReceiptNavigation).WithMany(p => p.ProductReceipts)
-                .HasForeignKey(d => d.IdReceipt)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_Product_Receipt2");
-        });
-
         modelBuilder.Entity<Receipt>(entity =>
         {
             entity.ToTable("Receipt");
@@ -127,6 +108,27 @@ public partial class LidlManagerContext : DbContext
                 .HasForeignKey(d => d.IdProduct)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Stock_Product");
+        });
+
+        modelBuilder.Entity<StockReceipt>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_ProductReceipt");
+
+            entity.ToTable("StockReceipt");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.IdReceipt).HasColumnName("Id_receipt");
+            entity.Property(e => e.IdStock).HasColumnName("Id_stock");
+
+            entity.HasOne(d => d.IdReceiptNavigation).WithMany(p => p.StockReceipts)
+                .HasForeignKey(d => d.IdReceipt)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Product_Receipt2");
+
+            entity.HasOne(d => d.IdStockNavigation).WithMany(p => p.StockReceipts)
+                .HasForeignKey(d => d.IdStock)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_StockReceiptStock");
         });
 
         modelBuilder.Entity<User>(entity =>

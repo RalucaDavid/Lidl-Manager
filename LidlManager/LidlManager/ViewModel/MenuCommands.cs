@@ -416,6 +416,12 @@ namespace LidlManager.ViewModel
 
         #endregion
 
+        #region Stocks
+
+
+
+        #endregion
+
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

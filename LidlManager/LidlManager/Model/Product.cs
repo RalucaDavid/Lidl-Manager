@@ -21,7 +21,5 @@ public partial class Product
 
     public virtual Producer IdProducerNavigation { get; set; } = null!;
 
-    public virtual ICollection<ProductReceipt> ProductReceipts { get; set; } = new List<ProductReceipt>();
-
     public virtual ICollection<Stock> Stocks { get; set; } = new List<Stock>();
 }

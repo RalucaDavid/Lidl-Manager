@@ -24,4 +24,6 @@ public partial class Stock
     public bool IsActive { get; set; }
 
     public virtual Product IdProductNavigation { get; set; } = null!;
+
+    public virtual ICollection<StockReceipt> StockReceipts { get; set; } = new List<StockReceipt>();
 }
