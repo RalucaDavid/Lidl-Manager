@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace LidlManager.Model.BussinessLogicLayer
                     throw new InvalidOperationException("The producer doesn't exist.");
                 }
 
-                var existingCategory = lidlManager.Categories.FirstOrDefault(p => p.Id == newProduct.IdProducer);
+                var existingCategory = lidlManager.Categories.FirstOrDefault(p => p.Id == newProduct.IdCategory);
                 if (existingCategory == null)
                 {
                     throw new InvalidOperationException("The category doesn't exist.");
@@ -39,7 +40,7 @@ namespace LidlManager.Model.BussinessLogicLayer
                     throw new InvalidOperationException("A product with the same name and the same producer already exists.");
                 }
                 newProduct.IdProducerNavigation = existingProducer;
-                newProduct.IdCategoryNavigation = existingCategory; 
+                newProduct.IdCategoryNavigation = existingCategory;
                 newProduct.IsActive = true;
                 lidlManager.Products.Add(newProduct);
                 lidlManager.SaveChanges();
@@ -50,14 +51,57 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
         }
 
-        public void UpdateMethod(int id, string name, string country)
+        public void UpdateMethod(int id, string name, string barcode, Category category, Producer producer)
         {
+            var existingProduct = lidlManager.Products.FirstOrDefault(p => p.Barcode == barcode && p.Id != id);
+            if (existingProduct != null)
+            {
+                throw new InvalidOperationException("A product with the same barcode already exists.");
+            }
 
+            existingProduct = lidlManager.Products.FirstOrDefault(p => p.IdProducer == producer.Id && p.Name == name && p.Id != id);
+            if (existingProduct != null)
+            {
+                throw new InvalidOperationException("A product with the same name and the same producer already exists.");
+            }
+
+            existingProduct = lidlManager.Products.FirstOrDefault(p => p.Id == id);
+            if (existingProduct == null)
+            {
+                throw new InvalidOperationException("The product does not exist.");
+            }
+
+            var existingProducer = lidlManager.Producers.FirstOrDefault(p => p.Id == producer.Id);
+            if (existingProducer == null)
+            {
+                throw new InvalidOperationException("The producer doesn't exist.");
+            }
+
+            var existingCategory = lidlManager.Categories.FirstOrDefault(c => c.Id == category.Id);
+            if (existingCategory == null)
+            {
+                throw new InvalidOperationException("The category doesn't exist.");
+            }
+            existingProduct.Name = name;
+            existingProduct.Barcode = barcode;
+            existingProduct.IdProducer = producer.Id;
+            existingProduct.IdCategory = category.Id;
+            lidlManager.SaveChanges();
         }
 
-        public void DeleteMethod(string name, string country)
+        public void DeleteMethod(string name, string barcode, Category category, Producer producer)
         {
-
+            var existingProduct = lidlManager.Products.FirstOrDefault(p => p.Name == name && p.Barcode == barcode && 
+                                                                           p.IdProducer == producer.Id && p.IdCategory == category.Id);
+            if (existingProduct == null)
+            {
+                throw new InvalidOperationException("There is no product with this information.");
+            }
+            else
+            {
+                existingProduct.IsActive = false;
+                lidlManager.SaveChanges();
+            }
         }
 
         public ObservableCollection<Product> GetAllProducts()

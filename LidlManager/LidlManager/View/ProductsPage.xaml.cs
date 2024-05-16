@@ -52,12 +52,29 @@ namespace LidlManager.View
 
         private void UpdateProduct(object sender, RoutedEventArgs e)
         {
-          
+            if (productsList.SelectedItem is Product selectedProduct)
+            {
+                string name = nameTextBox.Text;
+                string barcode = barcodeTextBox.Text;
+                Category selectedCategory = cmbCategory.SelectedItem as Category;
+                Producer selectedProducer = cmbProducer.SelectedItem as Producer;
+                if (DataContext is MenuCommands menuCommands)
+                {
+                    menuCommands.UpdateProduct(sender, e, selectedProduct.Id, name, barcode, selectedCategory, selectedProducer);
+                }
+            }
         }
 
         private void DeleteProduct(object sender, RoutedEventArgs e)
         {
-           
+            string name = nameTextBox.Text;
+            string barcode = barcodeTextBox.Text;
+            Category selectedCategory = cmbCategory.SelectedItem as Category;
+            Producer selectedProducer = cmbProducer.SelectedItem as Producer;
+            if (DataContext is MenuCommands menuCommands)
+            {
+                menuCommands.DeleteProduct(sender, e, name, barcode, selectedCategory, selectedProducer);
+            }
         }
     }
 }

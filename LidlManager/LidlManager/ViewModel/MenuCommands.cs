@@ -374,6 +374,46 @@ namespace LidlManager.ViewModel
             }
         }
 
+        public void UpdateProduct(object sender, RoutedEventArgs e, int id, string name, string barcode, Category category, Producer producer)
+        {
+            try
+            {
+                string pattern = @"^\d{1,10}$";
+                Regex regex = new Regex(pattern);
+                if ((productBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(barcode)) && (category != null) && (producer != null) && (regex.IsMatch(barcode)))
+                {
+                    productBLL.UpdateMethod(id, name, barcode, category, producer);
+                    Products = productBLL.GetAllProducts();
+                }
+                else
+                    MessageBox.Show("Incorrect information!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void DeleteProduct(object sender, RoutedEventArgs e, string name, string barcode, Category category, Producer producer)
+        {
+            try
+            {
+                string pattern = @"^\d{1,10}$";
+                Regex regex = new Regex(pattern);
+                if ((productBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(barcode)) && (category != null) && (producer != null) && (regex.IsMatch(barcode)))
+                {
+                    productBLL.DeleteMethod(name, barcode, category, producer);
+                    Products = productBLL.GetAllProducts();
+                }
+                else
+                    MessageBox.Show("Incorrect information!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
         #endregion
 
         private void OnPropertyChanged(string propertyName)
