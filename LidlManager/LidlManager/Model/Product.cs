@@ -11,11 +11,13 @@ public partial class Product
 
     public string Barcode { get; set; } = null!;
 
-    public string Category { get; set; } = null!;
+    public int IdCategory { get; set; }
 
     public int IdProducer { get; set; }
 
     public bool IsActive { get; set; }
+
+    public virtual Category IdCategoryNavigation { get; set; } = null!;
 
     public virtual Producer IdProducerNavigation { get; set; } = null!;
 

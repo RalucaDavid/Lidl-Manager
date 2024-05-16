@@ -29,6 +29,9 @@ namespace LidlManager.ViewModel
             producerBLL = new ProducerBLL();
             Producers = producerBLL.GetAllProducers();
 
+            categoryBLL = new CategoryBLL();
+            Categories = categoryBLL.GetAllCategories();
+
             productBLL = new ProductBLL();
             Products = productBLL.GetAllProducts();
         }
@@ -228,6 +231,93 @@ namespace LidlManager.ViewModel
 
         #endregion
 
+        #region Categories
+
+        private ObservableCollection<Category> categories = new ObservableCollection<Category>();
+        public ObservableCollection<Category> Categories
+        {
+            get { return categories; }
+            set
+            {
+                if (categories != value)
+                {
+                    categories = value;
+                    OnPropertyChanged(nameof(Categories));
+                }
+            }
+        }
+        private CategoryBLL categoryBLL;
+        public CategoryBLL CategoryBLL
+        {
+            get { return categoryBLL; }
+            set
+            {
+                if (categoryBLL != value)
+                {
+                    categoryBLL = value;
+                    OnPropertyChanged(nameof(CategoryBLL));
+                }
+            }
+        }
+
+        public void AddCategory(object sender, RoutedEventArgs e, string name)
+        {
+            try
+            {
+                if ((producerBLL != null) && (!string.IsNullOrEmpty(name)))
+                {
+                    Category category = new Category();
+                    category.Name = name;
+                    categoryBLL.AddMethod(category);
+                    Categories = categoryBLL.GetAllCategories();
+                }
+                else
+                    MessageBox.Show("Incorrect name!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void UpdateCategory(object sender, RoutedEventArgs e, int id, string name)
+        {
+            try
+            {
+                if ((categoryBLL != null) && (!string.IsNullOrEmpty(name)))
+                {
+                    categoryBLL.UpdateMethod(id, name);
+                    Categories = categoryBLL.GetAllCategories();
+                }
+                else
+                    MessageBox.Show("Incorrect name!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void DeleteCategory(object sender, RoutedEventArgs e, string name)
+        {
+            try
+            {
+                if ((categoryBLL != null) && (!string.IsNullOrEmpty(name)))
+                {
+                    categoryBLL.DeleteMethod(name);
+                    Categories = categoryBLL.GetAllCategories();
+                }
+                else
+                    MessageBox.Show("Incorrect name or country!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        #endregion
+
         #region Products
 
         private ObservableCollection<Product> products = new ObservableCollection<Product>();
@@ -268,7 +358,7 @@ namespace LidlManager.ViewModel
                     Product product = new Product();
                     product.Name = name;
                     product.Barcode = barcode;
-                    product.Category = category;
+                    //product.Category = category;
                     product.IdProducer = selectedProducer.Id; 
                     product.IdProducerNavigation = selectedProducer;
                     productBLL.AddMethod(product);

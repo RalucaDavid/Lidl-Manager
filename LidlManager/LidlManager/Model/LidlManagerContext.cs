@@ -15,6 +15,8 @@ public partial class LidlManagerContext : DbContext
     {
     }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Producer> Producers { get; set; }
 
     public virtual DbSet<Product> Products { get; set; }
@@ -33,6 +35,16 @@ public partial class LidlManagerContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.ToTable("Category");
+
+            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Name)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<Producer>(entity =>
         {
             entity.ToTable("Producer");
@@ -54,13 +66,16 @@ public partial class LidlManagerContext : DbContext
             entity.Property(e => e.Barcode)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Category)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            entity.Property(e => e.IdCategory).HasColumnName("ID_category");
             entity.Property(e => e.IdProducer).HasColumnName("ID_producer");
             entity.Property(e => e.Name)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.IdCategoryNavigation).WithMany(p => p.Products)
+                .HasForeignKey(d => d.IdCategory)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_ProductCategory");
 
             entity.HasOne(d => d.IdProducerNavigation).WithMany(p => p.Products)
                 .HasForeignKey(d => d.IdProducer)
