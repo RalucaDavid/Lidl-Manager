@@ -4,11 +4,91 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:LidlManager.View"
+      xmlns:convert="clr-namespace:LidlManager.Converter"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="800" d:DesignWidth="1400"
       Title="StocksPage">
-
+    <Page.Resources>
+        <convert:DateOnlyToDateTimeConverter x:Key="DateConverter"/>
+    </Page.Resources>
     <Grid>
-        
+        <Grid.Background>
+            <SolidColorBrush Color="#FFFBF904" Opacity="0.6"/>
+        </Grid.Background>
+        <Image Source="../Resources/logo.png" Margin="1090,0,0,500" HorizontalAlignment="Left"/>
+        <TextBlock FontSize="10" Margin="104,135,-84,-135"><Run Text="Format: Product's Name + Amount + Unit + Expiration Date? + Supply Date  + Purchase Price + Selling Price"/><LineBreak/><Run/><LineBreak/><Run/></TextBlock>
+        <ListBox Name="stocksList" Margin="90,160,805,35" ItemsSource="{Binding Stocks}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="15" Text="{Binding IdProductNavigation.Name}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Amount}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Unit}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding ExpirationDate}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding SupplyDate}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding PuchasePrice}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding SellingPrice}" Margin="10,0,10,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Height="720" Width="430" Margin="635,0,0,0"
+    DataContext="{Binding Path=DataContext, ElementName=stocksList}">
+            <StackPanel.Background>
+                <SolidColorBrush Color="#FF1C2C93" Opacity="1"/>
+            </StackPanel.Background>
+            <TextBlock Text="Stock" FontSize="30" FontWeight="Bold" Margin="0 0 0 20" HorizontalAlignment="Center" Foreground="White"/>
+            <StackPanel>
+                <TextBlock Text="Product:" Height="31" Width="86" FontSize="20" Foreground="White"/>
+                <ComboBox x:Name="cmbProduct" Width="380" FontSize="25" Height="31"
+ItemsSource="{Binding Products}"
+SelectedItem="{Binding SelectedItem.IdProductNavigation, ElementName=productsList, Mode=OneWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <StackPanel Margin="0 0 0 20">
+                <TextBlock Text="Amount:" HorizontalAlignment="Center" Height="33" Width="80" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="amountTextBox" Text="{Binding SelectedItem.Amount, ElementName=stocksList, Mode=OneWay}" FontSize="25" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <StackPanel Margin="0 0 0 20">
+                <TextBlock Text="Unit:" Height="31" Width="48" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="unitTextBox" FontSize="25" Text="{Binding SelectedItem.Unit, ElementName=stocksList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Width="377">
+                <StackPanel Margin="0,0,10,0">
+                    <TextBlock Text="Expiration Date:" Height="31" Width="145" FontSize="20" Foreground="White"/>
+                    <Calendar x:Name="expirationDate" SelectedDate="{Binding SelectedItem.ExpirationDate, Mode=OneWay, Converter={StaticResource DateConverter}, ElementName=stocksList}" Height="157"/>
+                </StackPanel>
+                <StackPanel Width="189">
+                    <TextBlock Text="Supply Date:" Height="31" Width="113" FontSize="20" Foreground="White"/>
+                    <Calendar x:Name="supplyDate" SelectedDate="{Binding SelectedItem.SupplyDate, Converter={StaticResource DateConverter}, ElementName=stocksList, Mode=OneWay}" Height="157" Width="200"/>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Puchase Price:" Height="31" Width="124" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="purchaseTextBox" FontSize="25" Text="{Binding SelectedItem.PuchasePrice, ElementName=stocksList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="Selling Price:" Height="31" Width="124" FontSize="20" Foreground="White"/>
+                <TextBox x:Name="sellingTextBox" FontSize="25" Text="{Binding SelectedItem.SellingPrice, ElementName=stocksList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
+            </StackPanel>
+            <Grid Width="382" Height="77">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Click="DeleteStock" Content="Delete" Background="#FFF70E06" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="1" Click="UpdateStock" Content="Update" Background="#FFD4D42E" Height="53" FontSize="20" Foreground="White" Margin="0 0 5 0"/>
+                <Button Grid.Column="2" Click="AddStock" Content="Add" Background="#FF4CAF50" Height="53" FontSize="20" Foreground="White" Margin="0 0 0 0"/>
+            </Grid>
+        </StackPanel>
     </Grid>
 </Page>

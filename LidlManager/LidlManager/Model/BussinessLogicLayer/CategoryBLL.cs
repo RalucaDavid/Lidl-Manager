@@ -52,7 +52,7 @@ namespace LidlManager.Model.BussinessLogicLayer
 
         public void DeleteMethod(string name)
         {
-            var existingCategory = lidlManager.Categories.FirstOrDefault(p => p.Name == name);
+            var existingCategory = lidlManager.Categories.FirstOrDefault(c => c.Name == name);
             if (existingCategory == null)
             {
                 throw new InvalidOperationException("There is no category with this information.");

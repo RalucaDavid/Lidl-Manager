@@ -14,6 +14,7 @@ using LidlManager.Model.BussinessLogicLayer;
 using Azure.Identity;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
+using Microsoft.Identity.Client.NativeInterop;
 
 namespace LidlManager.ViewModel
 {
@@ -34,6 +35,9 @@ namespace LidlManager.ViewModel
 
             productBLL = new ProductBLL();
             Products = productBLL.GetAllProducts();
+
+            stockBLL = new StockBLL();
+            Stocks = stockBLL.GetAllStocks();
         }
 
         #region Users
@@ -418,7 +422,67 @@ namespace LidlManager.ViewModel
 
         #region Stocks
 
+        private ObservableCollection<Stock> stocks = new ObservableCollection<Stock>();
+        public ObservableCollection<Stock> Stocks
+        {
+            get { return stocks; }
+            set
+            {
+                if (stocks != value)
+                {
+                    stocks = value;
+                    OnPropertyChanged(nameof(stocks));
+                }
+            }
+        }
+        private StockBLL stockBLL;
+        public StockBLL StockBLL
+        {
+            get { return stockBLL; }
+            set
+            {
+                if (stockBLL != value)
+                {
+                    stockBLL = value;
+                    OnPropertyChanged(nameof(StockBLL));
+                }
+            }
+        }
 
+        public void AddStock(Product product,string amount, string unit, DateTime? expirationDate, DateTime? supplyDate, string purchase)
+        {
+            try
+            {
+                const double profitMarginPercentage = 20.0; 
+                const double taxesAndExpenses = 15.0; 
+                double amountDouble, purchaseDouble;
+                if ((stockBLL != null) && (!string.IsNullOrEmpty(unit)) && (!string.IsNullOrEmpty(amount)) && ( product!= null) 
+                          && (double.TryParse(amount, out amountDouble))&&(double.TryParse(purchase, out purchaseDouble))
+                          && (supplyDate != null) && ((expirationDate == null)||(expirationDate.Value > supplyDate.Value)))
+                {
+                    Stock stock = new Stock();
+                    stock.Amount = amountDouble;
+                    stock.Unit = unit;
+                    stock.IdProduct = product.Id;
+                    stock.IdProductNavigation = product;
+                    stock.SupplyDate = DateOnly.FromDateTime(supplyDate.Value);
+                    stock.PuchasePrice = purchaseDouble;
+                    stock.SellingPrice = purchaseDouble + purchaseDouble * (profitMarginPercentage / 100) + taxesAndExpenses;
+                    if (expirationDate != null)
+                    {
+                        stock.ExpirationDate = DateOnly.FromDateTime(expirationDate.Value);
+                    }
+                    stockBLL.AddMethod(stock);
+                    Stocks = stockBLL.GetAllStocks();
+                }
+                else
+                    MessageBox.Show("Incorrect information!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
 
         #endregion
 

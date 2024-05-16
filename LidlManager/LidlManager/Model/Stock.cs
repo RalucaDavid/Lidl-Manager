@@ -9,9 +9,9 @@ public partial class Stock
 
     public double Amount { get; set; }
 
-    public double Unit { get; set; }
+    public string Unit { get; set; } = null!;
 
-    public double? ExpirationDate { get; set; }
+    public DateOnly? ExpirationDate { get; set; }
 
     public DateOnly SupplyDate { get; set; }
 

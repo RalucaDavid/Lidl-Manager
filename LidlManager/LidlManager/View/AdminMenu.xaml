@@ -16,7 +16,7 @@
         <Button Click="GoToUsersPage" Content="Users" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="280,400,0,283"/>
         <Button Click="GoToProductsPage" Content="Products" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="280,593,0,90"/>
         <Button Click="GoToProducersPage" Content="Producers" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,593,0,90"/>
-        <Button Content="Stocks" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,400,0,283"/>
+        <Button Click="GoToStocksPage" Content="Stocks" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,400,0,283"/>
         <Button Content="Receipts" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,400,0,283"/>
         <Button Click="GoToCategoriesPage" Content="Categories" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,593,0,90"/>
     </Grid>

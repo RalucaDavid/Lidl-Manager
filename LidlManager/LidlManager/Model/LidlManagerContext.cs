@@ -103,6 +103,9 @@ public partial class LidlManagerContext : DbContext
 
             entity.Property(e => e.Id).HasColumnName("ID");
             entity.Property(e => e.IdProduct).HasColumnName("Id_product");
+            entity.Property(e => e.Unit)
+                .HasMaxLength(50)
+                .IsUnicode(false);
 
             entity.HasOne(d => d.IdProductNavigation).WithMany(p => p.Stocks)
                 .HasForeignKey(d => d.IdProduct)
