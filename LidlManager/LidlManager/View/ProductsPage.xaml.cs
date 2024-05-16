@@ -42,11 +42,11 @@ namespace LidlManager.View
         {
             string name = nameTextBox.Text;
             string barcode = barcodeTextBox.Text;
-            string category = categoryTextBox.Text;
+            Category selectedCategory = cmbCategory.SelectedItem as Category;
             Producer selectedProducer = cmbProducer.SelectedItem as Producer;
             if (DataContext is MenuCommands menuCommands)
             {
-                menuCommands.AddProduct(name, barcode, category, selectedProducer);
+                menuCommands.AddProduct(name, barcode, selectedCategory, selectedProducer);
             }
         }
 

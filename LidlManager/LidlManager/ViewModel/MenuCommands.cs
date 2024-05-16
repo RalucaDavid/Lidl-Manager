@@ -347,20 +347,21 @@ namespace LidlManager.ViewModel
             }
         }
 
-        public void AddProduct(string name, string barcode, string category, Producer selectedProducer)
+        public void AddProduct(string name, string barcode, Category category,Producer producer)
         {
             try
             {
                 string pattern = @"^\d{1,10}$";
                 Regex regex = new Regex(pattern);
-                if ((productBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(barcode)) && (!string.IsNullOrEmpty(category)) && (selectedProducer!=null) && (regex.IsMatch(barcode)))
+                if ((productBLL != null) && (!string.IsNullOrEmpty(name)) && (!string.IsNullOrEmpty(barcode)) && (category!=null) && (producer!=null) && (regex.IsMatch(barcode)))
                 {
                     Product product = new Product();
                     product.Name = name;
                     product.Barcode = barcode;
-                    //product.Category = category;
-                    product.IdProducer = selectedProducer.Id; 
-                    product.IdProducerNavigation = selectedProducer;
+                    product.IdCategory = category.Id;
+                    product.IdCategoryNavigation = category;
+                    product.IdProducer = producer.Id; 
+                    product.IdProducerNavigation = producer;
                     productBLL.AddMethod(product);
                     Products = productBLL.GetAllProducts();
                 }

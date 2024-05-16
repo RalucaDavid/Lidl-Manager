@@ -19,7 +19,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="15" Text="{Binding Name}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding Barcode}" Margin="10,0,10,0"/>
-                        <TextBlock FontSize="15" Text="{Binding Category}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding IdCategoryNavigation.Name}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding IdProducerNavigation.Name}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding IdProducerNavigation.CountryOfOrigin}" Margin="10,0,10,0"/>
                     </StackPanel>
@@ -41,9 +41,19 @@
                 <TextBlock Text="Barcode:" Height="31" Width="86" FontSize="20" Foreground="White"/>
                 <TextBox x:Name="barcodeTextBox" FontSize="25" Text="{Binding SelectedItem.Barcode, ElementName=productsList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
             </StackPanel>
-            <StackPanel Margin="0 0 0 20">
+            <StackPanel>
                 <TextBlock Text="Category:" Height="31" Width="86" FontSize="20" Foreground="White"/>
-                <TextBox x:Name="categoryTextBox" FontSize="25" Text="{Binding SelectedItem.Category, ElementName=productsList, Mode=OneWay}" Width="380" HorizontalAlignment="Center" Height="41"/>
+                <ComboBox x:Name="cmbCategory" Width="380" FontSize="25" Height="31"
+ItemsSource="{Binding Categories}"
+SelectedItem="{Binding SelectedItem.IdCategoryNavigation, ElementName=productsList, Mode=OneWay}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
             </StackPanel>
             <StackPanel>
                 <TextBlock Text="Producer:" Height="31" Width="86" FontSize="20" Foreground="White"/>
