@@ -85,5 +85,15 @@ namespace LidlManager.View
                 navigationService.Navigate(new CategoriesPage(DataContext));
             }
         }
+
+        private void GoToView1Page(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new View1Page(DataContext));
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -74,6 +75,15 @@ namespace LidlManager.Model.BussinessLogicLayer
                     result.Add(producer);
             }
             return result;
+        }
+
+        public ObservableCollection<Product>  GetProductsByProducer(int id)
+        {
+            var products = lidlManager.Products
+            .Where(p => p.IdProducer == id && p.IsActive)
+            .Include(p => p.IdCategoryNavigation)
+            .ToList();
+            return new ObservableCollection<Product>(products);
         }
     }
 }

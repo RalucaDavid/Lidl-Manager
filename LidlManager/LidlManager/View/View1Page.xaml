@@ -1,0 +1,66 @@
+﻿<Page x:Class="LidlManager.View.View1Page"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:model="clr-namespace:LidlManager.Model" xmlns:viewmodel="clr-namespace:LidlManager.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MenuCommands}"
+      mc:Ignorable="d" 
+      d:DesignHeight="800" d:DesignWidth="1400"
+      Title="View1Page">
+    <Page.Resources>
+        <CollectionViewSource x:Key="ProductsByCategory" Source="{Binding ProducersProducts}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="IdCategoryNavigation.Name"/>
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </Page.Resources>
+    <Grid>
+        <Grid.Background>
+            <SolidColorBrush Color="#FFFBF904" Opacity="0.6"/>
+        </Grid.Background>
+        <Image Source="../Resources/logo.png" Margin="1100,0,0,500" HorizontalAlignment="Left"/>
+        <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
+        <TextBlock Text="Select the producer for that you want to see his products:" FontSize="15" Foreground="Black" Margin="80,148,539,498"/>
+        <Button Click="SearchProducersProducts" Content="Search" Margin="455,180,880,530" Background="#FF1C2C93" Foreground="White"></Button>
+        <ComboBox x:Name="cmbProducer" FontSize="25" ItemsSource="{Binding Producers}" Margin="80,180,965,530">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CountryOfOrigin}" FontSize="16" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <ListView ItemsSource="{Binding Source={StaticResource ProductsByCategory}}" Margin="80,275,880,45">
+            <ListView.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="16" Foreground="Black"/>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </ListView.GroupStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontSize="14"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <ListBox Name="categoriesSumsList" Margin="640,275,320,47" ItemsSource="{Binding CategoriesSums}" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="15" Text="{Binding CategoryName}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding TotalPrice}" Margin="10,0,10,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <TextBlock Text="The amount the prices of all products in each category:" FontSize="15" Foreground="Black" Margin="640,246,-21,400"/>
+
+    </Grid>
+</Page>

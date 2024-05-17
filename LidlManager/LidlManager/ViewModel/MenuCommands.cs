@@ -431,7 +431,7 @@ namespace LidlManager.ViewModel
                 if (stocks != value)
                 {
                     stocks = value;
-                    OnPropertyChanged(nameof(stocks));
+                    OnPropertyChanged(nameof(Stocks));
                 }
             }
         }
@@ -509,6 +509,62 @@ namespace LidlManager.ViewModel
             {
                 stockBLL.DeleteMethod(id);
                 Stocks = stockBLL.GetAllStocks();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        #endregion
+
+        #region View1
+
+        private ObservableCollection<Product> producersProducts = new ObservableCollection<Product>();
+        public ObservableCollection<Product> ProducersProducts
+        {
+            get { return producersProducts; }
+            set
+            {
+                if (producersProducts != value)
+                {
+                    producersProducts = value;
+                    OnPropertyChanged(nameof(ProducersProducts));
+                }
+            }
+        }
+
+        private ObservableCollection<CategoryTotalPrice> categoriesSums = new ObservableCollection<CategoryTotalPrice>();
+        public ObservableCollection<CategoryTotalPrice> CategoriesSums
+        {
+            get { return categoriesSums; }
+            set
+            {
+                if (categoriesSums != value)
+                {
+                    categoriesSums = value;
+                    OnPropertyChanged(nameof(CategoriesSums));
+                }
+            }
+        }
+
+        public void SearchProductsByProducer(object sender, RoutedEventArgs e, int id)
+        {
+            try
+            {
+                ProducersProducts = producerBLL.GetProductsByProducer(id);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void AddCategoriesSums()
+        {
+            try
+            {
+                CategoriesSums = categoryBLL.GetAllCategoriesSums();
             }
             catch (Exception ex)
             {

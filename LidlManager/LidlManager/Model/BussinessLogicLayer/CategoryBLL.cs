@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
@@ -74,6 +75,23 @@ namespace LidlManager.Model.BussinessLogicLayer
                     result.Add(category);
             }
             return result;
+        }
+
+        public ObservableCollection<CategoryTotalPrice> GetAllCategoriesSums()
+        {
+            var categorySums = lidlManager.Categories
+                              .Where(category => category.IsActive)
+                              .Select(category => new CategoryTotalPrice
+                              {
+                                  CategoryName = category.Name,
+                                  TotalPrice = lidlManager.Products
+                                  .Where(p => p.IdCategoryNavigation.Id == category.Id)
+                                  .Where(p => p.IsActive)
+                                  .SelectMany(p => p.Stocks.Where(s => s.IsActive))
+                                  .Sum(p => (decimal)p.SellingPrice)
+                              })
+                              .ToList();
+            return new ObservableCollection<CategoryTotalPrice>(categorySums);
         }
     }
 }
