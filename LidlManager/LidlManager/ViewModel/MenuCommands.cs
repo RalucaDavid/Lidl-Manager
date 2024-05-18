@@ -574,6 +574,12 @@ namespace LidlManager.ViewModel
 
         #endregion
 
+        #region Cashier
+
+
+
+        #endregion
+
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)
