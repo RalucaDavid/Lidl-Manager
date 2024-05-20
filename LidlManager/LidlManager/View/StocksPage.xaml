@@ -32,8 +32,8 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <TextBlock Text="Add -> You can't add the selling price." Margin="1080,640,110,140"></TextBlock>
-        <TextBlock Text="Update -> You can update just the selling price." Margin="1080,660,62,120"></TextBlock>
+        <TextBlock Text="Add -> You can't add the selling price." Margin="1080,615,50,125"></TextBlock>
+        <TextBlock Text="Update -> You can update just the selling price." Margin="1080,645,45,80"></TextBlock>
         <Button Click="GoToAdminMenu" Content="Back"  Margin="33,22,1225,700" Background="#FF1C2C93" Foreground="White" FontSize="20"/>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Height="720" Width="430" Margin="635,0,0,0"
     DataContext="{Binding Path=DataContext, ElementName=stocksList}">

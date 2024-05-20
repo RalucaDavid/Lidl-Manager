@@ -576,7 +576,34 @@ namespace LidlManager.ViewModel
 
         #region Cashier
 
+        private ObservableCollection<Product> producersSuggestions = new ObservableCollection<Product>();
+        public ObservableCollection<Product> ProducersSuggestions
+        {
+            get { return producersSuggestions; }
+            set
+            {
+                if (producersSuggestions != value)
+                {
+                    producersSuggestions = value;
+                    OnPropertyChanged(nameof(ProducersSuggestions));
+                }
+            }
+        }
 
+        public void SearchProduct(string name, string barcode, int selectedCategory, int selectedProducer, DateTime? selectedExpirationDate)
+        {
+            try
+            {
+                if(productBLL != null)
+                {
+                    //ProducersSuggestions = productBLL.SearchProduct();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
 
         #endregion
 

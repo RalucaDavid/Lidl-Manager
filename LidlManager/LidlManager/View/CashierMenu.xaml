@@ -14,22 +14,37 @@
         </Grid.Background>
         <TextBlock Text="Search for the product you want to buy:" Margin="31,16,994,701" FontSize="20"></TextBlock>
         <TextBlock Text="Category filter:" Margin="31,230,1172,500" FontSize="20"></TextBlock>
-        <ComboBox x:Name="categoryComboBox" Margin="31,260,1126,463">
+        <ComboBox x:Name="categoryComboBox" Margin="31,260,1126,463" ItemsSource="{Binding Categories}">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="Producer filter:" Margin="32,324,1143,380" FontSize="20"/>
-        <ComboBox x:Name="producersComboBox" Margin="31,353,1126,345">
+        <ComboBox x:Name="producersComboBox" Margin="31,353,1126,345" ItemsSource="{Binding Producers}">
             <ComboBox.Background>
                 <LinearGradientBrush EndPoint="0,1">
                     <GradientStop Color="#FFF0F0F0"/>
                     <GradientStop Color="White" Offset="1"/>
                 </LinearGradientBrush>
             </ComboBox.Background>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CountryOfOrigin}" FontSize="16" FontWeight="Bold"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
         </ComboBox>
         <TextBlock Text="Expiration Date filter:" Margin="32,438,1143,280" FontSize="20"/>
         <Calendar x:Name="expirationDate" Margin="9,472,1151,108" RenderTransformOrigin="0.5,0.5">
@@ -46,7 +61,7 @@
         <TextBox x:Name="nameTextBox" FontSize="25" Width="248" HorizontalAlignment="Left" Margin="31,92,0,630"/>
         <TextBlock Text="Barcode:" FontSize="20" Margin="33,138,1128,535"></TextBlock>
         <TextBox x:Name="barcodeTextBox" FontSize="25" Width="248" HorizontalAlignment="Left" Margin="31,175,0,545"/>
-        <Button Content="Search" Foreground="White" Background="#FF1C2C93" Margin="275,655,994,50"></Button>
+        <Button Click="Search" Content="Search" Foreground="White" Background="#FF1C2C93" Margin="275,655,994,50"></Button>
         <ListBox x:Name="suggestionsList" Margin="1050,38,35,146">
 
         </ListBox>

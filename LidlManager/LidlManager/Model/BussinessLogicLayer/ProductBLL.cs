@@ -116,5 +116,10 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
             return result;
         }
+
+        //public ObservableCollection<Product> SearchProduct()
+        //{
+
+        //}
     }
 }
