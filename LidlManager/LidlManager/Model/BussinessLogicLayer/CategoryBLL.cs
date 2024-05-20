@@ -60,6 +60,13 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
             else
             {
+                var activeProducts = lidlManager.Products.Any(p => p.IdCategory == existingCategory.Id && p.IsActive);
+
+                if (activeProducts)
+                {
+                    throw new InvalidOperationException("Category cannot be deleted because there are products associated with this producer.");
+                }
+
                 existingCategory.IsActive = false;
                 lidlManager.SaveChanges();
             }

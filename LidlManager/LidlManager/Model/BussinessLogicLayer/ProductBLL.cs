@@ -99,6 +99,13 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
             else
             {
+                var activeStocks = lidlManager.Stocks.Any(s => s.IdProduct == existingProduct.Id && s.IsActive);
+
+                if (activeStocks)
+                {
+                    throw new InvalidOperationException("Product cannot be deleted because it has stocks.");
+                }
+
                 existingProduct.IsActive = false;
                 lidlManager.SaveChanges();
             }
