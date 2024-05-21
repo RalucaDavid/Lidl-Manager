@@ -79,18 +79,10 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <Grid Margin="1050,630,35,85">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="21*" />
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="19*"/>
-            </Grid.ColumnDefinitions>
-            <Button Grid.Column="0"  Content="Delete" Background="#FFF70E06" FontSize="15" Foreground="White" Margin="0,0,5,0"/>
-            <Button Grid.Column="2"  Content="Add" Background="#FF4CAF50" FontSize="15" Foreground="White"/>
-        </Grid>
+        <Button Grid.Column="0" Click="AddProduct" Content="Add" Background="#FF4CAF50" FontSize="15" Foreground="White" Margin="568,655,516,50"/>
         <TextBlock Margin="1050,9,105,715" FontSize="20" Text="The current receipt:"/>
-        <Button Content="Finish the receipt."  Foreground="White" Background="#FF1C2C93" FontSize="20" Margin="1050,695,35,30"></Button>
+        <Button Content="Finish the receipt."  Foreground="White" Background="#FF1C2C93" FontSize="20" Margin="1050,655,35,50"></Button>
         <TextBlock Margin="560,9,595,715" FontSize="20" Text="Suggestions from search: "/>
-        <TextBlock Margin="512,634,35,90" FontSize="10" Text="Format: Product's Name + Unit + Barcode + Producer's Name + Expiration Date + Selling Price"/>
+        <TextBlock Margin="512,634,410,90" FontSize="10" Text="Format: Product's Name + Unit + Barcode + Producer's Name + Expiration Date + Selling Price"/>
     </Grid>
 </Page>

@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.VisualBasic;
 
 namespace LidlManager.View
 {
@@ -41,6 +42,26 @@ namespace LidlManager.View
             if (DataContext is MenuCommands menuCommands)
             {
                 menuCommands.SearchProduct(name, barcode, categoryId, producerId, selectedExpirationDate);
+            }
+        }
+
+        private void AddProduct(object sender, RoutedEventArgs e)
+        {
+            if (suggestionsList.SelectedItem is Stock selectedStock)
+            { 
+                string input = Interaction.InputBox("Enter the quantity you want to buy:", "Enter Quantity", "1");
+                if ((int.TryParse(input, out int quantity)) && (quantity > 0) && (quantity <= selectedStock.Amount))
+                {
+                    //(selectedStock, quantity);
+                }
+                else
+                {
+                    MessageBox.Show("Please enter a valid quantity.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a product from the list first.");
             }
         }
     }
