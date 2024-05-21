@@ -62,25 +62,35 @@
         <TextBlock Text="Barcode:" FontSize="20" Margin="33,138,1128,535"></TextBlock>
         <TextBox x:Name="barcodeTextBox" FontSize="25" Width="248" HorizontalAlignment="Left" Margin="31,175,0,545"/>
         <Button Click="Search" Content="Search" Foreground="White" Background="#FF1C2C93" Margin="275,655,994,50"></Button>
-        <ListBox x:Name="suggestionsList" Margin="1050,38,35,146">
-
+        <ListBox x:Name="productsList" Margin="1050,38,35,146">
+            
         </ListBox>
-        <ListBox x:Name="productsList" Margin="560,38,525,146">
-
+        <ListBox x:Name="suggestionsList" Margin="560,38,525,146" ItemsSource="{Binding ProductsSuggestions}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="15" Text="{Binding IdProductNavigation.Name}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Unit}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding IdProductNavigation.Barcode}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding IdProductNavigation.IdProducerNavigation.Name}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding ExpirationDate}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding SellingPrice}" Margin="10,0,10,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <Grid Margin="1050,630,35,85">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="21*" />
                 <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="19*"/>
-                <ColumnDefinition Width="21*" />
             </Grid.ColumnDefinitions>
             <Button Grid.Column="0"  Content="Delete" Background="#FFF70E06" FontSize="15" Foreground="White" Margin="0,0,5,0"/>
-            <Button  Content="Update" Background="#FFD4D42E" FontSize="15" Foreground="White" Margin="0,0,5,0" Grid.Column="1" Grid.ColumnSpan="2"/>
-            <Button Grid.Column="3"  Content="Add" Background="#FF4CAF50" FontSize="15" Foreground="White"/>
+            <Button Grid.Column="2"  Content="Add" Background="#FF4CAF50" FontSize="15" Foreground="White"/>
         </Grid>
         <TextBlock Margin="1050,9,105,715" FontSize="20" Text="The current receipt:"/>
         <Button Content="Finish the receipt."  Foreground="White" Background="#FF1C2C93" FontSize="20" Margin="1050,695,35,30"></Button>
-        <TextBlock Margin="560,9,595,715" FontSize="20" Text="Suggestions from search:"/>
+        <TextBlock Margin="560,9,595,715" FontSize="20" Text="Suggestions from search: "/>
+        <TextBlock Margin="512,634,35,90" FontSize="10" Text="Format: Product's Name + Unit + Barcode + Producer's Name + Expiration Date + Selling Price"/>
     </Grid>
 </Page>

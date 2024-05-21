@@ -124,9 +124,19 @@ namespace LidlManager.Model.BussinessLogicLayer
             return result;
         }
 
-        //public ObservableCollection<Product> SearchProduct()
-        //{
+        public ObservableCollection<Product> GetProductsByProducer(int id)
+        {
+            var existingProducer = lidlManager.Producers.FirstOrDefault(p => p.Id == id);
+            if (existingProducer == null)
+            {
+                throw new InvalidOperationException("The producer doesn't exist.");
+            }
 
-        //}
+            var products = lidlManager.Products
+            .Where(p => p.IdProducer == id && p.IsActive)
+            .Include(p => p.IdCategoryNavigation)
+            .ToList();
+            return new ObservableCollection<Product>(products);
+        }
     }
 }

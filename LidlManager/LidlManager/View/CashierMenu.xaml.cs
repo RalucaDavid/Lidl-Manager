@@ -36,9 +36,11 @@ namespace LidlManager.View
             Category selectedCategory = categoryComboBox.SelectedItem as Category;
             Producer selectedProducer = producersComboBox.SelectedItem as Producer;
             DateTime? selectedExpirationDate = expirationDate.SelectedDate;
+            int? categoryId = selectedCategory != null ? selectedCategory.Id : (int?)null;
+            int? producerId = selectedProducer != null ? selectedProducer.Id : (int?)null;
             if (DataContext is MenuCommands menuCommands)
             {
-                menuCommands.SearchProduct(name, barcode, selectedCategory.Id, selectedProducer.Id, selectedExpirationDate);
+                menuCommands.SearchProduct(name, barcode, categoryId, producerId, selectedExpirationDate);
             }
         }
     }

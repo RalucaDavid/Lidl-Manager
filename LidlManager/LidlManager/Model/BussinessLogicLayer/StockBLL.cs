@@ -74,5 +74,43 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
             return result;
         }
+
+        public ObservableCollection<Stock> SearchProduct(string name, string barcode, int? selectedCategory, int? selectedProducer, DateTime? selectedExpirationDate)
+        {
+            var stockQuery = lidlManager.Stocks
+                                .Include(s => s.IdProductNavigation)
+                                .Where(s => s.IsActive)
+                                .AsQueryable();
+
+            if (selectedExpirationDate.HasValue)
+            {
+                stockQuery = stockQuery.Where(s => s.ExpirationDate == DateOnly.FromDateTime(selectedExpirationDate.Value));
+            }
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                stockQuery = stockQuery.Where(s => s.IdProductNavigation.Name.Contains(name));
+            }
+
+            if (!string.IsNullOrEmpty(barcode))
+            {
+                stockQuery = stockQuery.Where(s => s.IdProductNavigation.Barcode.Contains(barcode));
+            }
+
+            if (selectedCategory.HasValue)
+            {
+                stockQuery = stockQuery.Where(s => s.IdProductNavigation.IdCategory == selectedCategory.Value);
+            }
+
+            if (selectedProducer.HasValue)
+            {
+                stockQuery = stockQuery.Where(s => s.IdProductNavigation.IdProducer == selectedProducer.Value);
+            }
+
+            stockQuery = stockQuery.GroupBy(s => s.IdProduct)
+                                   .Select(g => g.OrderBy(s => s.SupplyDate).First());
+
+            return new ObservableCollection<Stock>(stockQuery.ToList());
+        }
     }
 }

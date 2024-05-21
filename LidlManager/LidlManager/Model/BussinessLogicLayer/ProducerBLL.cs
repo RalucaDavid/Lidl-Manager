@@ -84,13 +84,5 @@ namespace LidlManager.Model.BussinessLogicLayer
             return result;
         }
 
-        public ObservableCollection<Product>  GetProductsByProducer(int id)
-        {
-            var products = lidlManager.Products
-            .Where(p => p.IdProducer == id && p.IsActive)
-            .Include(p => p.IdCategoryNavigation)
-            .ToList();
-            return new ObservableCollection<Product>(products);
-        }
     }
 }

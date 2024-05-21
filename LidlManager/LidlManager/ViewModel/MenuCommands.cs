@@ -552,7 +552,7 @@ namespace LidlManager.ViewModel
         {
             try
             {
-                ProducersProducts = producerBLL.GetProductsByProducer(id);
+                ProducersProducts = productBLL.GetProductsByProducer(id);
             }
             catch (Exception ex)
             {
@@ -576,27 +576,33 @@ namespace LidlManager.ViewModel
 
         #region Cashier
 
-        private ObservableCollection<Product> producersSuggestions = new ObservableCollection<Product>();
-        public ObservableCollection<Product> ProducersSuggestions
+        private ObservableCollection<Stock> productsSuggestions = new ObservableCollection<Stock>();
+        public ObservableCollection<Stock> ProductsSuggestions
         {
-            get { return producersSuggestions; }
+            get { return productsSuggestions; }
             set
             {
-                if (producersSuggestions != value)
+                if (productsSuggestions != value)
                 {
-                    producersSuggestions = value;
-                    OnPropertyChanged(nameof(ProducersSuggestions));
+                    productsSuggestions = value;
+                    OnPropertyChanged(nameof(ProductsSuggestions));
                 }
             }
         }
 
-        public void SearchProduct(string name, string barcode, int selectedCategory, int selectedProducer, DateTime? selectedExpirationDate)
+        public void SearchProduct(string name, string barcode, int? selectedCategory, int? selectedProducer, DateTime? selectedExpirationDate)
         {
             try
             {
-                if(productBLL != null)
+                string pattern = @"^\d{1,10}$";
+                Regex regex = new Regex(pattern);
+                if ((productBLL != null) && ((regex.IsMatch(barcode) || string.IsNullOrEmpty(barcode))))
                 {
-                    //ProducersSuggestions = productBLL.SearchProduct();
+                    ProductsSuggestions = stockBLL.SearchProduct(name, barcode, selectedCategory, selectedProducer, selectedExpirationDate);
+                }
+                else
+                {
+                    MessageBox.Show("Incorrect information!The barcode must have only numbers.");
                 }
             }
             catch (Exception ex)
