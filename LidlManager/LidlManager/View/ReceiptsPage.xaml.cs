@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LidlManager.Model;
+using LidlManager.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +26,27 @@ namespace LidlManager.View
         {
             InitializeComponent();
             DataContext = dContext;
+        }
+
+        private void GoToAdminMenu(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new AdminMenu(DataContext));
+            }
+        }
+
+        private void DeleteReceipt(object sender, RoutedEventArgs e)
+        {
+            if(receiptsList.SelectedItem is StockReceipt receipt)
+            {
+                if (DataContext is MenuCommands menuCommands)
+                {
+                    menuCommands.DeleteReceipt(receipt.IdReceiptNavigation.Id);
+                }
+            }
         }
     }
 }

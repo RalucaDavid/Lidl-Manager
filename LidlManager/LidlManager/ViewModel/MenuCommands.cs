@@ -43,6 +43,7 @@ namespace LidlManager.ViewModel
             receiptBLL = new ReceiptBLL();
 
             stockReceiptBLL = new StockReceiptBLL();
+            StockReceipts = stockReceiptBLL.GetAllStockReceipts();
         }
 
         #region Users
@@ -80,13 +81,13 @@ namespace LidlManager.ViewModel
             if (user != null)
             {
                 currentUser = user;
-                receiptBLL.AddMethod(currentReceipt, currentUser);
                 if (user.Type == "Admin")
                 {
                     return "Admin";
                 }
                 else if (user.Type == "Cashier")
                 {
+                    receiptBLL.AddMethod(currentReceipt, currentUser);
                     return "Cashier";
                 }
             }
@@ -597,6 +598,32 @@ namespace LidlManager.ViewModel
             }
         }
 
+        private ObservableCollection<StockReceipt> stockReceipts = new ObservableCollection<StockReceipt>();
+        public ObservableCollection<StockReceipt> StockReceipts
+        {
+            get { return stockReceipts; }
+            set
+            {
+                if (stockReceipts != value)
+                {
+                    stockReceipts = value;
+                    OnPropertyChanged(nameof(StockReceipts));
+                }
+            }
+        }
+
+        public void DeleteReceipt(int id)
+        {
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+        }
+
         #endregion
 
         #region Cashier
@@ -694,6 +721,7 @@ namespace LidlManager.ViewModel
                 productsOnReceipts.Add(stockReceipt);
                 Stocks = stockBLL.GetAllStocks();
                 Total += quantity * selectedStock.SellingPrice;
+                StockReceipts = stockReceiptBLL.GetAllStockReceipts();
             }
             catch (Exception ex)
             {

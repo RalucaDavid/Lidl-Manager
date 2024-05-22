@@ -33,14 +33,9 @@ namespace LidlManager.Model.BussinessLogicLayer
             }
         }
 
-        public void DeleteMethod(string name, string country)
+        public void DeleteMethod(int id)
         {
 
         }
-
-        //public ObservableCollection<Receipt> GetAllReceipts()
-        //{
-            
-        //}
     }
 }

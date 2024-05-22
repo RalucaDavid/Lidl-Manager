@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,22 @@ namespace LidlManager.Model.BussinessLogicLayer
             {
                 throw new ArgumentException("The provided object is not a StockReceipt.");
             }
+        }
+
+        public ObservableCollection<StockReceipt> GetAllStockReceipts()
+        {
+            ObservableCollection<StockReceipt> result = new ObservableCollection<StockReceipt>();
+            var stockReceiptFromDb = lidlManager.StockReceipts
+                    .Include(sr => sr.IdReceiptNavigation)
+                    .Include(sr => sr.IdStockNavigation)
+                    .ThenInclude(sn => sn.IdProductNavigation)
+                    .ToList();
+            foreach (var stockReceipt in stockReceiptFromDb)
+            {
+                if ((bool)stockReceipt.IdReceiptNavigation.IsActive)
+                    result.Add(stockReceipt);
+            }
+            return result;
         }
     }
 }
