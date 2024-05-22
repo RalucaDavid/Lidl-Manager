@@ -21,6 +21,7 @@ namespace LidlManager.ViewModel
     class MenuCommands : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public User currentUser = new User();
 
         public MenuCommands()
         {
@@ -38,6 +39,10 @@ namespace LidlManager.ViewModel
 
             stockBLL = new StockBLL();
             Stocks = stockBLL.GetAllStocks();
+
+            receiptBLL = new ReceiptBLL();
+
+            stockReceiptBLL = new StockReceiptBLL();
         }
 
         #region Users
@@ -74,6 +79,8 @@ namespace LidlManager.ViewModel
             User user = userBLL.Login(username, password);
             if (user != null)
             {
+                currentUser = user;
+                receiptBLL.AddMethod(currentReceipt, currentUser);
                 if (user.Type == "Admin")
                 {
                     return "Admin";
@@ -574,6 +581,24 @@ namespace LidlManager.ViewModel
 
         #endregion
 
+        #region Receipts 
+
+        private ReceiptBLL receiptBLL;
+        public ReceiptBLL ReceiptBLL
+        {
+            get { return receiptBLL; }
+            set
+            {
+                if (receiptBLL != value)
+                {
+                    receiptBLL = value;
+                    OnPropertyChanged(nameof(ReceiptBLL));
+                }
+            }
+        }
+
+        #endregion
+
         #region Cashier
 
         private ObservableCollection<Stock> productsSuggestions = new ObservableCollection<Stock>();
@@ -590,6 +615,50 @@ namespace LidlManager.ViewModel
             }
         }
 
+        private double total=0;
+        public double Total
+        {
+            get { return total; }
+            set
+            {
+                if (total != value)
+                {
+                    total = value;
+                    OnPropertyChanged(nameof(Total));
+                }
+            }
+        }
+
+        private ObservableCollection<StockReceipt> productsOnReceipts = new ObservableCollection<StockReceipt>();
+        public ObservableCollection<StockReceipt> ProductsOnReceipts
+        {
+            get { return productsOnReceipts; }
+            set
+            {
+                if (productsOnReceipts != value)
+                {
+                    productsOnReceipts = value;
+                    OnPropertyChanged(nameof(ProductsOnReceipts));
+                }
+            }
+        }
+
+        private Receipt currentReceipt = new Receipt();
+        public Receipt CurrentReceipt
+        {
+            get { return currentReceipt; }
+            set
+            {
+                if (currentReceipt != value)
+                {
+                    currentReceipt = value;
+                    OnPropertyChanged(nameof(CurrentReceipt));
+                }
+            }
+        }
+
+        private StockReceiptBLL stockReceiptBLL;
+
         public void SearchProduct(string name, string barcode, int? selectedCategory, int? selectedProducer, DateTime? selectedExpirationDate)
         {
             try
@@ -604,6 +673,43 @@ namespace LidlManager.ViewModel
                 {
                     MessageBox.Show("Incorrect information!The barcode must have only numbers.");
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void AddProductOnReceipt(Stock selectedStock, int quantity)
+        {
+            try
+            {
+                StockReceipt stockReceipt = new StockReceipt();
+                stockReceipt.IdReceipt = currentReceipt.Id;
+                stockReceipt.IdStock = selectedStock.Id;
+                stockReceiptBLL.AddMethod(stockReceipt, quantity);
+                selectedStock.Amount = selectedStock.Amount - quantity;
+                if (selectedStock.Amount == 0)
+                    selectedStock.IsActive = false;
+                productsOnReceipts.Add(stockReceipt);
+                Stocks = stockBLL.GetAllStocks();
+                Total += quantity * selectedStock.SellingPrice;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void AddFinishReceipt()
+        {
+            try
+            {
+                productsOnReceipts.Clear();
+                currentReceipt.FloatTotalSum = Total;
+                currentReceipt = new Receipt();
+                Total = 0;
+                receiptBLL.AddMethod(currentReceipt, currentUser);
             }
             catch (Exception ex)
             {

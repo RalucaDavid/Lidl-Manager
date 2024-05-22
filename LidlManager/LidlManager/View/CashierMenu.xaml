@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:LidlManager.View"
+      xmlns:local="clr-namespace:LidlManager.View" xmlns:viewmodel="clr-namespace:LidlManager.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MenuCommands}"
       mc:Ignorable="d" 
       d:DesignHeight="800" d:DesignWidth="1400"
       Title="CashierMenu">
@@ -62,8 +62,16 @@
         <TextBlock Text="Barcode:" FontSize="20" Margin="33,138,1128,535"></TextBlock>
         <TextBox x:Name="barcodeTextBox" FontSize="25" Width="248" HorizontalAlignment="Left" Margin="31,175,0,545"/>
         <Button Click="Search" Content="Search" Foreground="White" Background="#FF1C2C93" Margin="275,655,994,50"></Button>
-        <ListBox x:Name="productsList" Margin="1050,38,35,146">
-            
+        <ListBox x:Name="productsList" Margin="1050,38,35,245" ItemsSource="{Binding ProductsOnReceipts}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock FontSize="15" Text="{Binding Amount}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding IdStockNavigation.IdProductNavigation.Name}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Subtotal}" Margin="10,0,10,0"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
         </ListBox>
         <ListBox x:Name="suggestionsList" Margin="560,38,525,146" ItemsSource="{Binding ProductsSuggestions}">
             <ListBox.ItemTemplate>
@@ -71,6 +79,7 @@
                     <StackPanel Orientation="Horizontal">
                         <TextBlock FontSize="15" Text="{Binding IdProductNavigation.Name}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding Unit}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Amount}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding IdProductNavigation.Barcode}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding IdProductNavigation.IdProducerNavigation.Name}" Margin="10,0,10,0"/>
                         <TextBlock FontSize="15" Text="{Binding ExpirationDate}" Margin="10,0,10,0"/>
@@ -81,8 +90,9 @@
         </ListBox>
         <Button Grid.Column="0" Click="AddProduct" Content="Add" Background="#FF4CAF50" FontSize="15" Foreground="White" Margin="568,655,516,50"/>
         <TextBlock Margin="1050,9,105,715" FontSize="20" Text="The current receipt:"/>
-        <Button Content="Finish the receipt."  Foreground="White" Background="#FF1C2C93" FontSize="20" Margin="1050,655,35,50"></Button>
+        <Button  Click="FinishReceipt" Content="Finish the receipt."  Foreground="White" Background="#FF1C2C93" FontSize="20" Margin="1050,655,35,50"></Button>
         <TextBlock Margin="560,9,595,715" FontSize="20" Text="Suggestions from search: "/>
-        <TextBlock Margin="512,634,410,90" FontSize="10" Text="Format: Product's Name + Unit + Barcode + Producer's Name + Expiration Date + Selling Price"/>
+        <TextBlock Margin="487,643,410,81" FontSize="10" Text="Format: Product's Name + Unit + Amount + Barcode + Producer's Name + Expiration Date + Selling Price"/>
+        <TextBox x:Name="TotalTextBox" Text="{Binding Total}" FontSize="25" Width="295" HorizontalAlignment="Left" Margin="1050,560,0,162" IsReadOnly="True"/>
     </Grid>
 </Page>

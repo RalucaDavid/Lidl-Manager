@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.VisualBasic;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Data;
 
 namespace LidlManager.View
 {
@@ -52,7 +54,10 @@ namespace LidlManager.View
                 string input = Interaction.InputBox("Enter the quantity you want to buy:", "Enter Quantity", "1");
                 if ((int.TryParse(input, out int quantity)) && (quantity > 0) && (quantity <= selectedStock.Amount))
                 {
-                    //(selectedStock, quantity);
+                    if (DataContext is MenuCommands menuCommands)
+                    {
+                        menuCommands.AddProductOnReceipt(selectedStock, quantity);
+                    }
                 }
                 else
                 {
@@ -62,6 +67,14 @@ namespace LidlManager.View
             else
             {
                 MessageBox.Show("Please select a product from the list first.");
+            }
+        }
+
+        private void FinishReceipt(object sender, RoutedEventArgs e)
+        {
+            if (DataContext is MenuCommands menuCommands)
+            {
+                menuCommands.AddFinishReceipt();
             }
         }
     }
