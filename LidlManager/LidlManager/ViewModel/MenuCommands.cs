@@ -15,6 +15,8 @@ using Azure.Identity;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using Microsoft.Identity.Client.NativeInterop;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Data;
 
 namespace LidlManager.ViewModel
 {
@@ -616,11 +618,17 @@ namespace LidlManager.ViewModel
         {
             try
             {
-
+                if (receiptBLL != null)
+                {
+                    receiptBLL.DeleteMethod(id);
+                    StockReceipts = stockReceiptBLL.GetAllStockReceipts();
+                }
+                else
+                    MessageBox.Show($"Something went wrong.");
             }
-            catch
+            catch (Exception ex)
             {
-
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
             }
         }
 

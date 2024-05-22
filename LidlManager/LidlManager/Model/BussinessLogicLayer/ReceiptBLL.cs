@@ -35,7 +35,13 @@ namespace LidlManager.Model.BussinessLogicLayer
 
         public void DeleteMethod(int id)
         {
-
+            var existingReceipt = lidlManager.Receipts.FirstOrDefault(r => r.Id == id);
+            if (existingReceipt == null)
+            {
+                throw new InvalidOperationException("The receipt doesn't exist.");
+            }
+            existingReceipt.IsActive = false;
+            lidlManager.SaveChanges();
         }
     }
 }
