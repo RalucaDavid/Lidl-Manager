@@ -17,6 +17,7 @@ using System.Diagnostics.Metrics;
 using Microsoft.Identity.Client.NativeInterop;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Data;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace LidlManager.ViewModel
 {
@@ -757,7 +758,67 @@ namespace LidlManager.ViewModel
 
         #region View2
 
+        private ObservableCollection<StockReceipt> stockReceiptsFromBiggest = new ObservableCollection<StockReceipt> { new StockReceipt() };
+        public ObservableCollection<StockReceipt> StockReceiptsFromBiggest
+        {
+            get { return stockReceiptsFromBiggest; }
+            set
+            {
+                if (stockReceiptsFromBiggest != value)
+                {
+                    stockReceiptsFromBiggest = value;
+                    OnPropertyChanged(nameof(StockReceiptsFromBiggest));
+                }
+            }
+        }
 
+        private ObservableCollection<DailyEarnings> sumsReceipts = new ObservableCollection<DailyEarnings>();
+        public ObservableCollection<DailyEarnings > SumsReceipts
+        {
+            get { return sumsReceipts; }
+            set
+            {
+                if (sumsReceipts != value)
+                {
+                    sumsReceipts = value;
+                    OnPropertyChanged(nameof(SumsReceipts));
+                }
+            }
+        }
+
+        public void SearchBiggestReceipt(DateTime? date1)
+        {
+            try
+            {
+                if (date1 != null)
+                {
+                    StockReceiptsFromBiggest = receiptBLL.GetTheBiggestReceipt((DateTime)date1);
+                }
+                else
+                    MessageBox.Show("Choose a date!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
+
+        public void SearchDailyEarnings(User selectedUser, int selectedMonth)
+        {
+            try
+            {
+                if ((selectedUser != null)&&((selectedMonth>0)&&(selectedMonth<13)))
+                {
+                    SumsReceipts = receiptBLL.GetDailyEarnings(selectedUser.Id,selectedMonth);
+                }
+                else
+                    MessageBox.Show("Choose an user!");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An unexpected error occurred: {ex.Message}");
+            }
+        }
 
         #endregion
 

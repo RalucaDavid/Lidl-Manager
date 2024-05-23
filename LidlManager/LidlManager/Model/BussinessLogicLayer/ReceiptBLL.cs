@@ -43,5 +43,39 @@ namespace LidlManager.Model.BussinessLogicLayer
             existingReceipt.IsActive = false;
             lidlManager.SaveChanges();
         }
+
+        public ObservableCollection<StockReceipt> GetTheBiggestReceipt(DateTime date)
+        {
+            var biggestReceipt = lidlManager.Receipts
+                                    .Where(r => r.ReleaseDate == DateOnly.FromDateTime(date.Date) && r.IsActive)
+                                    .OrderByDescending(r => r.FloatTotalSum)
+                                    .FirstOrDefault();
+            if (biggestReceipt == null)
+            {
+                return new ObservableCollection<StockReceipt>();
+            }
+            var stockReceipts = lidlManager.StockReceipts
+                                           .Where(sr => sr.IdReceipt == biggestReceipt.Id)
+                                           .ToList();
+            return new ObservableCollection<StockReceipt>(stockReceipts);
+        }
+
+        public ObservableCollection<DailyEarnings> GetDailyEarnings(int idUser, int month)
+        {
+            var receipts = lidlManager.Receipts
+                                      .Where(r => r.IdUser == idUser &&
+                                                  r.ReleaseDate.Month == month &&
+                                                  r.IsActive)
+                                      .ToList();
+            var dailyEarnings = receipts.GroupBy(r => r.ReleaseDate)
+                                        .Select(g => new DailyEarnings
+                                        {
+                                            Date = g.Key.ToDateTime(TimeOnly.MinValue),
+                                            TotalAmount = (decimal)g.Sum(r => r.FloatTotalSum)
+                                        })
+                                        .OrderBy(e => e.Date)
+                                        .ToList();
+            return new ObservableCollection<DailyEarnings>(dailyEarnings);
+        }
     }
 }

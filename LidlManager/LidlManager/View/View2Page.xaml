@@ -13,18 +13,13 @@
                 <PropertyGroupDescription PropertyName="IdReceiptNavigation.Id"/>
             </CollectionViewSource.GroupDescriptions>
         </CollectionViewSource>
-        <CollectionViewSource x:Key="StockReceiptsById2" Source="{Binding StockReceipts}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="IdReceiptNavigation.Id"/>
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
     </Page.Resources>
     <Grid>
         <Grid.Background>
             <SolidColorBrush Color="#FFFBF904" Opacity="0.6"/>
         </Grid.Background>
         <Image Source="../Resources/logo.png" Margin="1100,0,0,500" HorizontalAlignment="Left"/>
-        <Button  Content="Search" Margin="460,210,820,508" Background="#FF1C2C93" Foreground="White"></Button>
+        <Button  Click="ClickSearch1" Content="Search" Margin="460,210,820,508" Background="#FF1C2C93" Foreground="White"></Button>
         <ComboBox x:Name="cmbUser" FontSize="25" ItemsSource="{Binding Users}" Margin="80,180,965,549">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -34,7 +29,7 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <ComboBox Margin="80,232,965,508">
+        <ComboBox x:Name="cmbMonth" Margin="80,232,965,508">
             <ComboBoxItem Content="January" Tag="1"/>
             <ComboBoxItem Content="February" Tag="2"/>
             <ComboBoxItem Content="March" Tag="3"/>
@@ -48,30 +43,18 @@
             <ComboBoxItem Content="November" Tag="11"/>
             <ComboBoxItem Content="December" Tag="12"/>
         </ComboBox>
-        <ListView x:Name="receiptsList" ItemsSource="{Binding Source={StaticResource StockReceiptsById2}}" Margin="80,297,855,45">
-            <ListView.GroupStyle>
-                <GroupStyle>
-                    <GroupStyle.HeaderTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <TextBlock Text="{Binding Items[0].IdReceiptNavigation.FloatTotalSum, StringFormat='Total: {0:C}'}" FontWeight="Bold" FontSize="16" Foreground="Black"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </GroupStyle.HeaderTemplate>
-                </GroupStyle>
-            </ListView.GroupStyle>
-            <ListView.ItemTemplate>
+        <ListBox Name="sumsList" Margin="90,297,805,35" ItemsSource="{Binding SumsReceipts}" >
+            <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Amount}" FontSize="15" Margin="10,0,10,0"/>
-                        <TextBlock FontSize="15" Text="{Binding IdStockNavigation.IdProductNavigation.Name}" Margin="10,0,10,0"/>
-                        <TextBlock FontSize="15" Text="{Binding Subtotal}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding Date, StringFormat={}{0:dd/MM/yyyy}}" Margin="10,0,10,0"/>
+                        <TextBlock FontSize="15" Text="{Binding TotalAmount}" Margin="10,0,10,0"/>
                     </StackPanel>
                 </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        <Calendar Margin="730,279,470,265"></Calendar>
-        <Button  Content="Search" Margin="955,279,340,431" Background="#FF1C2C93" Foreground="White"/>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Calendar x:Name="date" Margin="730,279,470,265"></Calendar>
+        <Button  Click="ClickSearch2" Content="Search" Margin="955,279,340,431" Background="#FF1C2C93" Foreground="White"/>
         <ListView x:Name="biggestReceipt" ItemsSource="{Binding Source={StaticResource StockReceiptsById}}" Margin="730,464,360,40">
             <ListView.GroupStyle>
                 <GroupStyle>
