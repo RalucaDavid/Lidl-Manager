@@ -755,6 +755,12 @@ namespace LidlManager.ViewModel
 
         #endregion
 
+        #region View2
+
+
+
+        #endregion
+
         private void OnPropertyChanged(string propertyName)
         {
             if (PropertyChanged != null)

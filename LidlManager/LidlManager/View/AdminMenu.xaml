@@ -20,5 +20,6 @@
         <Button Click="GoToReceiptsPage" Content="Receipts" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,400,0,283"/>
         <Button Click="GoToCategoriesPage" Content="Categories" Width="240" Background="#FF1C2C93" HorizontalAlignment="Center" FontSize="30" Foreground="White" Margin="0,593,0,90"/>
         <Button Click="GoToView1Page" Content="View 1" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="280,200,0,483"/>
+        <Button Click="GoToView2Page" Content="View 2" Width="240" Background="#FF1C2C93" HorizontalAlignment="Left" FontSize="30" Foreground="White" Margin="880,200,0,483"/>
     </Grid>
 </Page>
