@@ -57,5 +57,15 @@ namespace LidlManager.View
             else
                 MessageBox.Show("Choose a month!");
         }
+
+        private void GoToAdminMenu(object sender, RoutedEventArgs e)
+        {
+            NavigationService navigationService = NavigationService.GetNavigationService(this);
+            if (navigationService != null)
+            {
+                navigationService.RemoveBackEntry();
+                navigationService.Navigate(new AdminMenu(DataContext));
+            }
+        }
     }
 }
