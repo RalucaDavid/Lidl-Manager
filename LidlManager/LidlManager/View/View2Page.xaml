@@ -24,8 +24,8 @@
             <SolidColorBrush Color="#FFFBF904" Opacity="0.6"/>
         </Grid.Background>
         <Image Source="../Resources/logo.png" Margin="1100,0,0,500" HorizontalAlignment="Left"/>
-        <Button  Content="Search" Margin="460,210,820,530" Background="#FF1C2C93" Foreground="White"></Button>
-        <ComboBox x:Name="cmbUser" FontSize="25" ItemsSource="{Binding Users}" Margin="80,180,965,560">
+        <Button  Content="Search" Margin="460,210,820,508" Background="#FF1C2C93" Foreground="White"></Button>
+        <ComboBox x:Name="cmbUser" FontSize="25" ItemsSource="{Binding Users}" Margin="80,180,965,549">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -34,23 +34,21 @@
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
-        <StackPanel Orientation="Horizontal" Margin="80,125,965,341">
-            <ComboBox Width="355" Height="60">
-                <ComboBoxItem Content="January" Tag="1"/>
-                <ComboBoxItem Content="February" Tag="2"/>
-                <ComboBoxItem Content="March" Tag="3"/>
-                <ComboBoxItem Content="April" Tag="4"/>
-                <ComboBoxItem Content="May" Tag="5"/>
-                <ComboBoxItem Content="June" Tag="6"/>
-                <ComboBoxItem Content="July" Tag="7"/>
-                <ComboBoxItem Content="August" Tag="8"/>
-                <ComboBoxItem Content="September" Tag="9"/>
-                <ComboBoxItem Content="October" Tag="10"/>
-                <ComboBoxItem Content="November" Tag="11"/>
-                <ComboBoxItem Content="December" Tag="12"/>
-            </ComboBox>
-        </StackPanel>
-        <ListView x:Name="receiptsList" ItemsSource="{Binding Source={StaticResource StockReceiptsById2}}" Margin="80,345,855,45">
+        <ComboBox Margin="80,232,965,508">
+            <ComboBoxItem Content="January" Tag="1"/>
+            <ComboBoxItem Content="February" Tag="2"/>
+            <ComboBoxItem Content="March" Tag="3"/>
+            <ComboBoxItem Content="April" Tag="4"/>
+            <ComboBoxItem Content="May" Tag="5"/>
+            <ComboBoxItem Content="June" Tag="6"/>
+            <ComboBoxItem Content="July" Tag="7"/>
+            <ComboBoxItem Content="August" Tag="8"/>
+            <ComboBoxItem Content="September" Tag="9"/>
+            <ComboBoxItem Content="October" Tag="10"/>
+            <ComboBoxItem Content="November" Tag="11"/>
+            <ComboBoxItem Content="December" Tag="12"/>
+        </ComboBox>
+        <ListView x:Name="receiptsList" ItemsSource="{Binding Source={StaticResource StockReceiptsById2}}" Margin="80,297,855,45">
             <ListView.GroupStyle>
                 <GroupStyle>
                     <GroupStyle.HeaderTemplate>
@@ -72,8 +70,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Calendar Margin="730,279,470,341"></Calendar>
-        <Button  Content="Search" Margin="955,279,340,461" Background="#FF1C2C93" Foreground="White"/>
+        <Calendar Margin="730,279,470,265"></Calendar>
+        <Button  Content="Search" Margin="955,279,340,431" Background="#FF1C2C93" Foreground="White"/>
         <ListView x:Name="biggestReceipt" ItemsSource="{Binding Source={StaticResource StockReceiptsById}}" Margin="730,464,360,40">
             <ListView.GroupStyle>
                 <GroupStyle>
